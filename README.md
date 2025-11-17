@@ -23,7 +23,7 @@ git pull origin develop-nom1
 ```
 
 To retreive modifications made in other branches :
-``bash
+```bash
 git pull origin <develop-name-of-the-branch-you-want-to-retreive>
 git merge <develop-name-of-the-branch-to-merge-to> #conflicts may arise and need solving
 ```
