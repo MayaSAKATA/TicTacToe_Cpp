@@ -16,6 +16,7 @@ This project uses a **Makefile** to automate the compilation process with 'g++'.
 The first time you work on this repo, reptreive the https or ssh link :
 ```bash
 git clone <paste the link>
+```
 To pull the lastest updates :
 ```bash
 git pull origin develop-nom1
