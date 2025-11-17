@@ -13,23 +13,23 @@ This project is an implementation of the classic **Tic-Tac-Toe** (Noughts and Cr
 This project uses a **Makefile** to automate the compilation process with 'g++'.
 
 ## Useful git commands
-The first time you work on this repo, reptreive the https or ssh link :
+The first time you work on this repo, retrieve the https or ssh link :
 ```bash
 git clone <paste the link>
 ```
 To pull the lastest updates :
 ```bash
-git pull origin develop-nom1
+git pull origin <develop-name>
 ```
 
 To retreive modifications made in other branches :
 ```bash
-git pull origin <develop-name-of-the-branch-you-want-to-retreive>
+git pull origin <develop-name-of-the-branch-you-want-to-retrieve>
 git merge <develop-name-of-the-branch-to-merge-to> #conflicts may arise and need solving
 ```
 
 To add any changes made in your branch :
 ```bash
-git commit -m "A concise description of my modification"
+git commit -m "A concise description of your modification"
 git push origin <develop-name>
 ```
