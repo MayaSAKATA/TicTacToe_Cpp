@@ -6,7 +6,7 @@ using namespace std;
 int main(){
     TicTacToe Game;
     Game.Stockage();
-    //Game.Afficher();
+    //Game.DashBoard();
 
     Game.Play(0, 1);    // X
     Game.Play(1, 1);    // O
@@ -20,8 +20,7 @@ int main(){
     
 
 
-
-    Game.Afficher();
+    Game.DashBoard();
 
     return 0;
 }
