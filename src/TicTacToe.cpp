@@ -1,16 +1,61 @@
 #include "TicTacToe.hpp"
 
-TicTacToe::TicTacToe() : board({'1', '2', '3', '4', '5', '6', '7', '8', '9'})
-{
-    grid_size = 3;
+using namespace std;
+
+// Constructor
+TicTacToe::TicTacToe(){
+
 }
 
-void TicTacToe::displayBoard()
-{
-    cout << "\nTicTacToe\n\n";
-    cout << "  " << board[0] << "  |  " << board[1] << "  |  " << board[2] << " " << endl;
-    cout << "-----" << "|" << "-----" << "|" << "-----" << endl;
-    cout << "  " << board[3] << "  |  " << board[4] << "  |  " << board[5] << " " << endl;
-    cout << "-----" << "|" << "-----" << "|" << "-----" << endl;
-    cout << "  " << board[6] << "  |  " << board[7] << "  |  " << board[8] << " " << endl;
+// Stockage 
+void TicTacToe::Stockage(){
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            Board[i][j] = '_';
+}
+    
+// Function to print the DashBoard
+void TicTacToe::DashBoard() {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++)
+            std::cout << "["<< Board[i][j] << "] ";
+        std::cout << std::endl;
+    }
+}
+
+// Function to switch player
+void TicTacToe::Switchplayer(){
+    if(current_player == 'X')
+        current_player = 'O';
+    else 
+        current_player = 'X';
+}
+
+// Function to play
+bool TicTacToe::Play(int line, int col){
+    if(Board[line][col] == '_'){
+        Board[line][col] = current_player;
+        Switchplayer();
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+// Function to show the win
+void TicTacToe::Win(int line, int col, char current_player){
+
+    // Horizontal Win
+
+
+    // Vertical Win
+
+
+    // First Diagonal Win
+
+
+    // Second Diagonal Win
+
+
 }
