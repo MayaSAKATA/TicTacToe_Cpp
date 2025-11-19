@@ -16,6 +16,8 @@ int main(){
     Game.Play(2, 0);
     Game.Play(2, 2);
     Game.Play(1, 0);
+    Game.Play(0, 2);
+
     
     
 
