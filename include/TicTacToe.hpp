@@ -7,8 +7,6 @@
 using namespace std;
 
 class TicTacToe{
-
-    private:
     static const int grid_size = 3; // Static definition of the grid
 
     // Definition of the board using a double-entry table
@@ -33,8 +31,8 @@ public:
     void Switchplayer();  // function to switch automaticaly the player
 
     void Win(int line, int col, char current_player); // Function to check a win after a game
-};
 
+};
 
 
 #endif

@@ -15,13 +15,13 @@ void TicTacToe::Stockage(){
         }
     }
 }
+    
 
 // Function to print the Board
 
 void TicTacToe::displayBoard(){
      for (int i = 0; i < TicTacToe::grid_size; i++) {
         for (int j = 0; j < TicTacToe::grid_size; j++)
-
             std::cout << "["<< Board[i][j] << "] ";
         std::cout << std::endl;
     }
