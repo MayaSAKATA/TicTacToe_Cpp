@@ -10,7 +10,7 @@ class TicTacToe{
     static const int grid_size = 3; // Static definition of the grid
 
     // Definition of the board using a double-entry table
-    char board[grid_size][grid_size] = { 
+    char Board[grid_size][grid_size] = { 
         {' ', ' ', ' '},
         {' ', ' ', ' '},
         {' ', ' ', ' '}
@@ -30,7 +30,10 @@ public:
 
     void Switchplayer();  // function to switch automaticaly the player
 
-    void Win(int line, int col, char current_player); // Function to check a win after a game
+    bool Win(int line, int col, char current_player); // Function to check a win after a game
+
+    bool Tie(); // Function to chek the Tie
+    
 
 };
 

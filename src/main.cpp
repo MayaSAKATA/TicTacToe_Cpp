@@ -11,19 +11,18 @@ int main()
 
     // After evrey play the player automaticaly
     // A play consist to give the position 
+    // Ask a player to to play
 
-    Game.Play(0, 1);    // X 
-    Game.Play(1, 1);    // O
-    Game.Play(2, 1);   
-    Game.Play(1, 2);
-    Game.Play(0, 0);
-    Game.Play(2, 0);
-    Game.Play(2, 2);
-    Game.Play(1, 0);
-    Game.Play(0, 2);
+    int line, col;
+    cout << "Give the position: " << endl;
+    cin >> line >> col;
 
-    
-    Game.displayBoard();
+    while (Game.Play(line, col)){
+
+        cout << "Give the position: " << endl;
+        cin >> line >> col;
+        
+    } 
 
     return 0;
 }
