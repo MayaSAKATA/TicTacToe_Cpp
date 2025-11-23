@@ -2,27 +2,38 @@
 
 using namespace std;
 
+int askChoice()
+{
+    while (true)
+    {
+        int choice;
+        cout << "Chose a position : " << endl;
+        cin >> choice;
+        if (choice < 1 || choice > 9)
+        {
+            cout << "Choice of of range (1-9). Retry." << endl;
+            continue;
+        }
+        return choice;
+    }
+}
 
 int main()
 {
-    TicTacToe Game; 
+    TicTacToe Game;
     Game.Stockage();
+
+    cout << "Let's play\n " << endl;
     Game.displayBoard();
 
-    // After evrey play the player automaticaly
-    // A play consist to give the position 
-    // Ask a player to to play
+    int choice, row, col;
 
-    int line, col;
-    cout << "Give the position: " << endl;
-    cin >> line >> col;
-
-    while (Game.Play(line, col)){
-
-        cout << "Give the position: " << endl;
-        cin >> line >> col;
-        
-    } 
+    do
+    {
+        choice = askChoice();
+        row = (choice - 1) / 3;
+        col = (choice - 1) % 3;
+    } while (Game.Play(row, col));
 
     return 0;
 }
