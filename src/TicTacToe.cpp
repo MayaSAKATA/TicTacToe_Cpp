@@ -81,54 +81,36 @@ bool TicTacToe::Win(int row, int col, char current_player)
         return true; // Player wins vertically
     }
 
-    // Check for first diagonal (\)
-    if (row == 0 && col == 0)
+    // Check the main diagonal on the current column
+    if (row == col)
     {
-        if ((Board[row + 1][col + 1] == current_player) && (Board[row + 2][col + 2] == current_player))
+        bool winDiag1 = true;
+        for (int i = 0; i < grid_size; i++)
         {
-            return true; // Top-left to bottom-right diagonal win
+            if (Board[i][i] != current_player)
+            {
+                winDiag1 = false;
+                break;
+            }
         }
+        if (winDiag1)
+            return true;
     }
 
-    if (row == 1 && col == 1)
+    // Check the anti-diagonal on the current column
+    if (row + col == grid_size - 1)
     {
-        if ((Board[row - 1][col - 1] == current_player) && (Board[row + 1][col + 1] == current_player))
+        bool winDiag2 = true;
+        for (int i = 0; i < grid_size; i++)
         {
-            return true; // Middle diagonal check
+            if (Board[i][grid_size - 1 - i] != current_player)
+            {
+                winDiag2 = false;
+                break;
+            }
         }
-    }
-
-    if (row == 2 && col == 2)
-    {
-        if ((Board[row - 1][col - 1] == current_player) && (Board[row - 2][col - 2] == current_player))
-        {
-            return true; // Bottom-right diagonal check
-        }
-    }
-
-    // Check for second diagonal (/)
-    if (row == 2 && col == 0)
-    {
-        if ((Board[row - 1][col + 1] == current_player) && (Board[row - 2][col + 2] == current_player))
-        {
-            return true; // Bottom-left to top-right diagonal win
-        }
-    }
-
-    if (row == 1 && col == 1)
-    {
-        if ((Board[row + 1][col - 1] == current_player) && (Board[row - 1][col + 1] == current_player))
-        {
-            return true; // Middle diagonal check
-        }
-    }
-
-    if (row == 0 && col == 2)
-    {
-        if ((Board[row + 1][col - 1] == current_player) && (Board[row + 2][col - 2] == current_player))
-        {
-            return true; // Top-right diagonal check
-        }
+        if (winDiag2)
+            return true;
     }
 
     // No win detected
