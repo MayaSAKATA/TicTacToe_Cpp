@@ -20,8 +20,7 @@ int askChoice()
 
 int main()
 {
-    TicTacToe Game;
-    Game.Stockage();
+    TicTacToe Game = TicTacToe();
 
     cout << "Let's play\n " << endl;
     Game.displayBoard();
