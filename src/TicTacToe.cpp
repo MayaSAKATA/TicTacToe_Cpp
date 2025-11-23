@@ -18,19 +18,19 @@ TicTacToe::TicTacToe()
 void TicTacToe::displayBoard()
 {
     int num = 1; // empty cell numbering starts from 1
-    for (int i = 0; i < TicTacToe::grid_size; i++)
+    for (int i = 0; i < grid_size; i++)
     {
-        for (int j = 0; j < TicTacToe::grid_size; j++)
+        for (int j = 0; j < grid_size; j++)
         {
             // Displays the cell content or its number if empty
             char c = (Board[i][j] == '_') ? ('0' + num) : Board[i][j];
             cout << " " << c << " ";
-            if (j < TicTacToe::grid_size - 1)
+            if (j < grid_size - 1)
                 cout << "|";
             num++;
         }
         cout << endl;
-        if (i < TicTacToe::grid_size - 1)
+        if (i < grid_size - 1)
             cout << "---+---+---" << endl; // separator between rows
     }
     cout << endl;
@@ -53,7 +53,7 @@ bool TicTacToe::Win(int row, int col, char current_player)
 
     // Check for horizontal win on the current line
     bool win_line = true;
-    for (int c = 0; c < TicTacToe::grid_size; c++)
+    for (int c = 0; c < grid_size; c++)
     {
         if (Board[row][c] != current_player)
         {                     // If any cell is not current player
@@ -68,7 +68,7 @@ bool TicTacToe::Win(int row, int col, char current_player)
 
     // Check for vertical win on the current column
     bool win_col = true;
-    for (int l = 0; l < TicTacToe::grid_size; l++)
+    for (int l = 0; l < grid_size; l++)
     {
         if (Board[l][col] != current_player)
         {                    // If any cell is not current player
@@ -139,9 +139,9 @@ bool TicTacToe::Win(int row, int col, char current_player)
 
 bool TicTacToe::Tie()
 {
-    for (int i = 0; i < TicTacToe::grid_size; i++)
+    for (int i = 0; i < grid_size; i++)
     {
-        for (int j = 0; j < TicTacToe::grid_size; j++)
+        for (int j = 0; j < grid_size; j++)
         {
             if (Board[i][j] == '_')
             {
@@ -155,33 +155,25 @@ bool TicTacToe::Tie()
 // Function to play a turn at the given position
 bool TicTacToe::Play(int line, int col)
 {
-    // Only allow move if the cell is empty
-    if (Board[line][col] == '_')
+    if (Board[line][col] != '_')
+        return false;
+
+    Board[line][col] = current_player;
+
+    displayBoard();
+
+    if (Win(line, col, current_player)) // Check if this move wins the game
     {
-        Board[line][col] = current_player; // Place current player's mark
-
-        // Check if this move wins the game
-        if (Win(line, col, current_player))
-        {
-            displayBoard();              // Show the final board
-            cout << " YOU WIN " << endl; // Announce victory
-            return false;                // Stop the game
-        }
-
-        // Check for Tie
-        if (Tie())
-        {
-            displayBoard();
-            cout << " It is a tie, play again!" << endl; // Tie message
-            return false;                                // Stop the game
-        }
-
-        displayBoard(); // Show board after move
-        Switchplayer(); // Switch to the next player
-        return true;    // Continue game
+        cout << " YOU WIN " << endl; // Announce victory
+        return false;                // Stop the game
     }
-    else
+
+    if (Tie()) // Check for Tie
     {
-        return false; // Invalid move, cell already occupied
+        cout << " It is a tie, play again!" << endl; // Tie message
+        return false;                                // Stop the game
     }
+
+    Switchplayer(); // Switch to the next player
+    return true;    // Continue game
 }
