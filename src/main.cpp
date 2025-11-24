@@ -20,19 +20,26 @@ int askChoice()
 
 int main()
 {
-    TicTacToe Game = TicTacToe();
+    int choice;
+    cout << "Select difficulty level:\n1. Easy (human vs human)\n2. Medium (human vs computer)\n3. Hard (not implemented)\n"
+         << endl;
+    cout << "Enter your choice (1-2): " << endl;
+    cin >> choice;
+    while (choice < 1 || choice > 2)
+    {
+        cout << "Only two levels available 1 or 2" << endl;
+        cin >> choice;
+    }
+
+    TicTacToe Game = TicTacToe(choice);
 
     cout << "Let's play\n " << endl;
-    Game.displayBoard();
 
-    int choice, row, col;
-
-    do
+    bool continue_game = true;
+    while (continue_game)
     {
-        choice = askChoice();
-        row = (choice - 1) / 3;
-        col = (choice - 1) % 3;
-    } while (Game.Play(row, col));
+        continue_game = Game.Play();
+    }
 
     return 0;
 }
