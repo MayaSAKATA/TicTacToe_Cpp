@@ -4,8 +4,8 @@ This project is an implementation of the classic **Tic-Tac-Toe** (Noughts and Cr
 
 ## Project structure
 
-1. **Phase one (current)** : basic 3x3 game against the computer
-2. **Phase two** : Dynamic levels
+1. **Phase one (current)** : basic 3x3 game against ourselves [OK]
+2. **Phase two** : Dynamic levels against computer (random and intelligent agents) [IN PROGRESS]
 3. **Phase three** : Graphical implementation
 
 ## Compilation and Execution
@@ -17,20 +17,26 @@ The first time you work on this repo, retrieve the https or ssh link :
 ```bash
 git clone <paste the link>
 ```
-To pull the lastest updates :
+To pull the lastest updates on the main:
 ```bash
-git pull origin <develop-name>
+git pull origin main
 ```
-
 To retreive modifications made in other branches :
 ```bash
-git pull origin <develop-name-of-the-branch-you-want-to-retrieve>
-git merge <develop-name-of-the-branch-to-merge-to> #conflicts may arise and need solving
+git pull origin <name-of-the-branch-you-want-to-retrieve>
+git merge <name-of-the-branch-to-merge-to> #conflicts may arise and need solving
 ```
 
 To add any changes made in your branch :
 ```bash
 git commit -m "A concise description of your modification"
-git push origin <develop-name>
+git push origin <branch-name>
 ```
-petite modif de test
+
+To merge a branch into main :
+```bash
+git checkout main
+git pull origin main # retrieve latest version
+git merge <branch-name> --no-edit # no-edit if you don't want to write a merge comment
+git push origin main 
+````
