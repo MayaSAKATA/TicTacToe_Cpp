@@ -9,10 +9,11 @@
 
 using namespace std;
 
-TicTacToe::TicTacToe(int level)
+TicTacToe::TicTacToe(int level, int games = 1)
 {
     current_player = 'X';
     difficulty = level;
+    number_of_games = games;
     srand(time(0));
 
     // Initialize the board with empty positions
@@ -41,6 +42,17 @@ void TicTacToe::displayBoard()
     }
     cout << '\n'
          << endl;
+}
+
+void TicTacToe::Board_Reset()
+{
+    for (int i = 0; i < grid_size; i++)
+    {
+        for (int j = 0; j < grid_size; j++)
+        {
+            Board[i][j] = '_';
+        }
+    }
 }
 
 void TicTacToe::Switchplayer()
@@ -154,7 +166,7 @@ std::vector<std::pair<int, int>> TicTacToe::getEmptyCells()
 
 std::pair<int, int> TicTacToe::getComputerMove()
 {
-    if (difficulty == 2)
+    if (difficulty == 1)
     {
         std::vector<std::pair<int, int>> empty_cells = getEmptyCells();
         if (!empty_cells.empty()) // check if there are empty cells
@@ -163,18 +175,11 @@ std::pair<int, int> TicTacToe::getComputerMove()
             return empty_cells[randomIndex];               // returns (row, col) of the selected cell
         }
     }
-    if (difficulty == 3)
+    if (difficulty == 2)
     {
         // Hard difficulty logic can be implemented here
     }
     return {0, 0};
-}
-bool TicTacToe::nextGame()
-{
-    char response;
-    cout << "Do you want to continue? (y/n): ";
-    cin >> response;
-    return (response == 'y' || response == 'Y');
 }
 
 bool TicTacToe::Play()
@@ -182,15 +187,14 @@ bool TicTacToe::Play()
     int row, col;
     displayBoard();
 
-    if (difficulty == 1 || current_player == 'X') // corriger ici
+    if (difficulty == 0 || current_player == 'X')
     {
         int choice = -1;
         cout << "Chose a position : " << endl;
         cin >> choice;
-        cout << '\n';
         while (choice < 1 || choice > 9)
         {
-            cout << "Choice of of range (1-9). Chose a position :\n"
+            cout << "Choice of of range (1-9). Chose a position :"
                  << endl;
             cin >> choice;
         }
@@ -245,4 +249,39 @@ bool TicTacToe::Play()
 
     Switchplayer(); // Switch to the next player
     return true;    // Continue game
+}
+
+void TicTacToe::Session(int number_of_games)
+{
+
+    while (number_of_games > 0)
+    {
+        Board_Reset();
+        current_player = 'X'; // X always starts first
+
+        bool continue_game = true;
+        while (continue_game)
+        {
+            continue_game = Play();
+        }
+        number_of_games--;
+        if (number_of_games == 0)
+        {
+            cout << "Session over! Thanks for playing!" << endl;
+            break;
+        }
+        char response;
+        cout << "Next game ? (y/n):";
+        cin >> response;
+        if (response == 'n' || response == 'N')
+        {
+            cout << "Thanks for playing!" << endl;
+            break;
+        }
+        else if (response == 'y' || response == 'Y')
+        {
+            cout << "Starting next game...\n"
+                 << endl;
+        }
+    }
 }

@@ -26,7 +26,12 @@ private:
     /**
      * @brief Static size of the grid (3x3).
      */
-    static const int grid_size = 3; // Static definition of the grid
+    static const int grid_size = 3;
+
+    /**
+     * @brief Number of games to be played in a session
+     */
+    int number_of_games;
 
     /**
      * @brief The game board represented by a 2D character array.
@@ -58,13 +63,19 @@ public:
      * * Initializes the game with the selected difficulty.
      * @param difficulty Integer representing the difficulty level (1, 2, or 3).
      */
-    TicTacToe(int difficulty);
+    TicTacToe(int difficulty, int number_of_games);
 
     /**
      * @brief Displays the current game board to the console.
      * * This function formats and prints the 3x3 grid.
      */
     void displayBoard();
+
+    /**
+     * @brief Resets the game board to play a new game.
+     * * This function formats and prints the 3x3 grid.
+     */
+    void Board_Reset();
 
     /**
      * @brief Retrieves a list of all empty cells on the board.
@@ -101,6 +112,8 @@ public:
      * @return false If moves are still available.
      */
     bool Tie();
+
+    void Session(int number_of_games);
 
     /**
      * @brief Executes a single turn of the game logic.
