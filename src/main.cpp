@@ -7,7 +7,7 @@ int main()
     int choice;
     cout << "Select difficulty level:\n1. Easy (human vs human)\n2. Medium (human vs computer)\n3. Hard (not implemented)\n"
          << endl;
-    cout << "Enter your choice (1-2): " << endl;
+    cout << "Enter your choice (1-2):" << endl;
     cin >> choice;
     while (choice < 1 || choice > 2)
     {
@@ -17,7 +17,7 @@ int main()
 
     TicTacToe Game = TicTacToe(choice);
 
-    cout << "Let's play\n " << endl;
+    cout << "\nLet's play\n " << endl;
 
     bool continue_game = true;
     while (continue_game)

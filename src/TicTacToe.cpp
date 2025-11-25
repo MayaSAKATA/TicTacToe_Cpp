@@ -50,7 +50,8 @@ void TicTacToe::displayBoard()
         if (i < grid_size - 1)
             cout << "---+---+---" << endl; // separator between rows
     }
-    cout << endl;
+    cout << '\n'
+         << endl;
 }
 
 /**
@@ -225,9 +226,11 @@ bool TicTacToe::Play()
         int choice = -1;
         cout << "Chose a position : " << endl;
         cin >> choice;
+        cout << '\n';
         while (choice < 1 || choice > 9)
         {
-            cout << "Choice of of range (1-9). Chose a position :" << endl;
+            cout << "Choice of of range (1-9). Chose a position :\n"
+                 << endl;
             cin >> choice;
         }
 
@@ -236,7 +239,8 @@ bool TicTacToe::Play()
 
         if (Board[row][col] != '_')
         {
-            cout << "Invalid choice, cell already occupied. Try again." << endl;
+            cout << "Invalid choice, cell already occupied. Try again.\n"
+                 << endl;
             return true; // Continue the game
         }
     }
@@ -246,7 +250,8 @@ bool TicTacToe::Play()
         std::pair<int, int> move = getComputerMove();
         row = move.first;
         col = move.second;
-        cout << "Computer chose position: " << (row * grid_size + col + 1) << endl;
+        cout << "Computer chose position: " << (row * grid_size + col + 1) << '\n'
+             << endl;
     }
 
     // Place the move on the board
@@ -257,11 +262,13 @@ bool TicTacToe::Play()
         displayBoard();
         if (difficulty > 1 && current_player == 'O')
         {
-            cout << " COMPUTER WINS " << endl; // Announce computer victory
+            cout << "COMPUTER WINS\n"
+                 << endl; // Announce computer victory
         }
         else
         {
-            cout << " YOU WIN " << endl; // Announce victory
+            cout << "YOU WIN\n"
+                 << endl; // Announce victory
         }
 
         return false; // Stop the game
@@ -270,8 +277,9 @@ bool TicTacToe::Play()
     if (Tie()) // Check for Tie
     {
         displayBoard();
-        cout << " It is a tie, play again!" << endl; // Tie message
-        return false;                                // Stop the game
+        cout << "It is a tie, play again!\n"
+             << endl; // Tie message
+        return false; // Stop the game
     }
 
     Switchplayer(); // Switch to the next player
