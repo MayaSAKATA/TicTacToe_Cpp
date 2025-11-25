@@ -2,22 +2,6 @@
 
 using namespace std;
 
-int askChoice()
-{
-    while (true)
-    {
-        int choice;
-        cout << "Chose a position : " << endl;
-        cin >> choice;
-        if (choice < 1 || choice > 9)
-        {
-            cout << "Choice of of range (1-9). Retry." << endl;
-            continue;
-        }
-        return choice;
-    }
-}
-
 int main()
 {
     int choice;
