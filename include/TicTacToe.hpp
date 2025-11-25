@@ -1,42 +1,115 @@
+/**
+ * @file TicTacToe.hpp
+ * @brief Header file defining the TicTacToe class and its game logic.
+ * @author Florient SAKIYE, Maya SAKATA
+ * @date 2025
+ */
+
 #ifndef TICTACTOE_HPP
 #define TICTACTOE_HPP
 
 #include <iostream>
 #include <vector>
-#include <cstdlib> // For rand() function
+#include <cstdlib>
 
 using namespace std;
+/**
+ * @class TicTacToe
+ * @brief Main class handling the TicTacToe game logic.
+ * * This class manages the game board, player turns, computer moves,
+ * and verifies win/tie conditions.
+ */
 
 class TicTacToe
 {
+private:
+    /**
+     * @brief Static size of the grid (3x3).
+     */
     static const int grid_size = 3; // Static definition of the grid
 
-    // Definition of the board using a double-entry table
+    /**
+     * @brief The game board represented by a 2D character array.
+     * * Initialized with empty spaces ' '.
+     */
     char Board[grid_size][grid_size] = {
         {' ', ' ', ' '},
         {' ', ' ', ' '},
         {' ', ' ', ' '}};
 
-    // Declaration and initialisation of the player
+    /**
+     * @brief The current player's symbol ('X' or 'O').
+     * * Initialized to 'X'.
+     */
     char current_player = 'X';
-    int difficulty; // 1: easy, 2: medium, 3: hard
+
+    /**
+     * @brief The difficulty level of the AI.
+     * * Values:
+     * - 1: Easy (Random moves)
+     * - 2: Medium (Defensive/Balanced)
+     * - 3: Hard (Minimax/Optimal)
+     */
+    int difficulty;
 
 public:
-    TicTacToe(int difficulty); // Constructor
+    /**
+     * @brief Constructor for the TicTacToe class.
+     * * Initializes the game with the selected difficulty.
+     * @param difficulty Integer representing the difficulty level (1, 2, or 3).
+     */
+    TicTacToe(int difficulty);
 
-    void displayBoard(); // Function to print the board
+    /**
+     * @brief Displays the current game board to the console.
+     * * This function formats and prints the 3x3 grid.
+     */
+    void displayBoard();
 
-    std::vector<std::pair<int, int>> getEmptyCells(); // Function to get empty cells
+    /**
+     * @brief Retrieves a list of all empty cells on the board.
+     * * @return std::vector<std::pair<int, int>> A vector of pairs (row, col) representing available moves.
+     */
+    std::vector<std::pair<int, int>> getEmptyCells();
 
-    std::pair<int, int> getComputerMove(); // Function to get the computer's move based on difficulty
+    /**
+     * @brief Calculates the computer's next move based on the difficulty level.
+     * * @return std::pair<int, int> The coordinates (row, col) selected by the computer.
+     */
+    std::pair<int, int> getComputerMove();
 
-    void Switchplayer(); // Function to switch automaticaly the player
+    /**
+     * @brief Switches the current player.
+     * * Toggles the 'current_player' attribute between 'X' and 'O'.
+     */
+    void Switchplayer();
 
-    bool Win(int row, int col, char current_player); // Function to check a win after a game
+    /**
+     * @brief Checks if the last move resulted in a win.
+     * * @param row The row index of the last move.
+     * @param col The column index of the last move.
+     * @param current_player The symbol of the player who made the last move.
+     * @return true If the move created a winning line.
+     * @return false Otherwise.
+     */
+    bool Win(int row, int col, char current_player);
 
-    bool Tie(); // Function to check the Tie
+    /**
+     * @brief Checks if the game is a tie (draw).
+     * * A tie occurs if the board is full and no player has won.
+     * @return true If the game is a tie.
+     * @return false If moves are still available.
+     */
+    bool Tie();
 
-    bool Play(); // Function to Select the positon of a play
+    /**
+     * @brief Executes a single turn of the game logic.
+     * * Handles input for the human player or triggers the computer move,
+     * then updates the board state.
+     * @return true If the move was valid and the game continues.
+     * @return false If the game has ended or an error occurred.
+     */
+    bool Play();
 };
 
 #endif
