@@ -9,12 +9,6 @@
 
 using namespace std;
 
-/**
- * @brief Constructor for the TicTacToe class.
- * * Initializes the board with underscores ('_'), sets the starting player to 'X',
- * and seeds the random number generator.
- * * @param level The difficulty level chosen by the user (1, 2, or 3).
- */
 TicTacToe::TicTacToe(int level)
 {
     current_player = 'X';
@@ -27,11 +21,6 @@ TicTacToe::TicTacToe(int level)
             Board[i][j] = '_';
 }
 
-/**
- * @brief Displays the current state of the game board on the console.
- * * Iterates through the grid. If a cell is empty ('_'), it displays a number (1-9)
- * to guide the user. Otherwise, it displays the player symbol ('X' or 'O').
- */
 void TicTacToe::displayBoard()
 {
     int num = 1; // empty cell numbering starts from 1
@@ -54,10 +43,6 @@ void TicTacToe::displayBoard()
          << endl;
 }
 
-/**
- * @brief Switches the turn between players.
- * * Changes the 'current_player' attribute from 'X' to 'O' or vice versa.
- */
 void TicTacToe::Switchplayer()
 {
     if (current_player == 'X')
@@ -66,14 +51,6 @@ void TicTacToe::Switchplayer()
         current_player = 'X'; // Switch from O to X
 }
 
-/**
- * @brief Checks if the current player has won the game.
- * * @param row The row index of the move just made.
- * @param col The column index of the move just made.
- * @param current_player The symbol of the player to check for a win.
- * @return true If the move resulted in a winning condition.
- * @return false Otherwise.
- */
 bool TicTacToe::Win(int row, int col, char current_player)
 {
 
@@ -143,12 +120,6 @@ bool TicTacToe::Win(int row, int col, char current_player)
     return false;
 }
 
-/**
- * @brief Checks for a tie.
- * * Iterates through the board to see if any empty cells ('_') remain.
- * * @return true If the board is full (no empty cells).
- * @return false If there are still possible moves.
- */
 bool TicTacToe::Tie()
 {
     for (int i = 0; i < grid_size; i++)
@@ -164,10 +135,6 @@ bool TicTacToe::Tie()
     return true; // All cells are filled
 }
 
-/**
- * @brief Identifies all empty cells on the board.
- * * @return std::vector<std::pair<int, int>> A vector containing the coordinates (row, col) of empty cells.
- */
 std::vector<std::pair<int, int>> TicTacToe::getEmptyCells()
 {
     std::vector<std::pair<int, int>> empty_cells = {};
@@ -185,12 +152,6 @@ std::vector<std::pair<int, int>> TicTacToe::getEmptyCells()
     return empty_cells;
 }
 
-/**
- * @brief Determines the computer's move based on difficulty.
- * * - Difficulty 2: Randomly selects an available cell.
- * - Difficulty 3: Optimal strategy.
- * @return std::pair<int, int> The coordinates (row, col) selected by the computer.
- */
 std::pair<int, int> TicTacToe::getComputerMove()
 {
     if (difficulty == 2)
@@ -208,14 +169,14 @@ std::pair<int, int> TicTacToe::getComputerMove()
     }
     return {0, 0};
 }
+bool TicTacToe::nextGame()
+{
+    char response;
+    cout << "Do you want to continue? (y/n): ";
+    cin >> response;
+    return (response == 'y' || response == 'Y');
+}
 
-/**
- * @brief Orchestrates a single turn of the game.
- * * Handles logic for both human input (choices 1-9) and computer moves.
- * Updates the board, checks for win/tie conditions, and switches the player.
- * * @return true If the game should continue to the next turn.
- * @return false If the game has ended (Win or Tie).
- */
 bool TicTacToe::Play()
 {
     int row, col;
