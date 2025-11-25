@@ -9,6 +9,8 @@ BUILD_DIR=build
 SRC_DIR=src
 INC_DIR=include
 
+EXEC=$(BUILD_DIR)/tictactoe_game
+
 OBJECTS=$(BUILD_DIR)/main.o $(BUILD_DIR)/TicTacToe.o
 
 #Rules
@@ -19,7 +21,7 @@ $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 
 $(EXEC): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $@
+	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
 
 #Compilation rules
 $(BUILD_DIR)/main.o: $(SRC_DIR)/main.cpp $(INC_DIR)/TicTacToe.hpp
