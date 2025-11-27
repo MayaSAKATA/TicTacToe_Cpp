@@ -237,14 +237,14 @@ bool TicTacToe::Play()
     if (Win(row, col, current_player)) // Check if this move wins the game
     {
         displayBoard();
-        if (difficulty > 1 && current_player == 'O')
+        if (difficulty > 0 && current_player == 'O')
         {
-            cout << "COMPUTER WINS\n"
+            cout << "YOU LOSE...COMPUTER WINS\n"
                  << endl; // Announce computer victory
         }
         else
         {
-            cout << "YOU WIN\n"
+            cout << "PLAYER '" << current_player << "' WINS\n"
                  << endl; // Announce victory
         }
 
