@@ -79,11 +79,13 @@ void TicTacToe::displayBoard()
 
 void TicTacToe::Board_Reset()
 {
+    Board.resize(grid_size); // Resize the number of rows
     for (int i = 0; i < grid_size; i++)
     {
+        Board[i].resize(grid_size); // Resize each row to have grid_size columns
         for (int j = 0; j < grid_size; j++)
         {
-            Board[i][j] = '_';
+            Board[i][j] = '_'; // Reset each cell to empty
         }
     }
 }
@@ -319,7 +321,7 @@ void TicTacToe::Session(int number_of_games)
             switch (continue_game.second) // adjust grid size based on last game result
             {
             case 1: // win, increase grid size
-                if (-grid_size < 6)
+                if (grid_size < 6)
                 {
                     grid_size++;
                 }
@@ -332,6 +334,7 @@ void TicTacToe::Session(int number_of_games)
             default:
                 break;
             }
+            Board_Reset();
         }
     }
 }

@@ -70,7 +70,7 @@ public:
 
     /**
      * @brief Resets the game board to play a new game.
-     * * This function formats and prints the 3x3 grid.
+     * * This function formats and prints the grid.
      */
     void Board_Reset();
 
@@ -112,7 +112,7 @@ public:
 
     /**
      * @brief Manages a session of multiple games.
-     * * Resets the board and alternates starting players for each game.
+     * * Loops through the specified number of games, resetting the board each time.
      * @param number_of_games The total number of games to be played in the session.
      */
     void Session(int number_of_games);
@@ -121,8 +121,8 @@ public:
      * @brief Executes a single turn of the game logic.
      * * Handles input for the human player or triggers the computer move,
      * then updates the board state.
-     * @return true If the move was valid and the game continues.
-     * @return false If the game has ended or an error occurred.
+     * @return std::pair<bool, int> A pair where the first element indicates if the game continues,
+     * and the second element indicates the game status (win/tie/lose).
      */
     pair<bool, int> Play();
 };
