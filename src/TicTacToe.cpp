@@ -33,15 +33,27 @@ void TicTacToe::displayBoard()
             char c = (Board[i][j] == '_') ? ('0' + num) : Board[i][j];
             cout << " " << c << " ";
             if (j < grid_size - 1)
+            {
                 cout << "|";
+            }
             num++;
         }
         cout << endl;
-        if (i < grid_size - 1)
-            cout << "---+---+---" << endl; // separator between rows
+        for (int j = 0; j < grid_size; j++)
+        {
+            if (j != grid_size - 1)
+            {
+
+                cout << "---+";
+            }
+            else
+            {
+                cout << "---";
+            }
+        }
+        cout << endl;
     }
-    cout << '\n'
-         << endl;
+    cout << '\n';
 }
 
 void TicTacToe::Board_Reset()

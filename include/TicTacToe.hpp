@@ -26,7 +26,7 @@ private:
     /**
      * @brief Static size of the grid (3x3).
      */
-    static const int grid_size = 3;
+    static const int grid_size = 5;
 
     /**
      * @brief Number of games to be played in a session
@@ -37,10 +37,7 @@ private:
      * @brief The game board represented by a 2D character array.
      * * Initialized with empty spaces ' '.
      */
-    char Board[grid_size][grid_size] = {
-        {' ', ' ', ' '},
-        {' ', ' ', ' '},
-        {' ', ' ', ' '}};
+    char Board[grid_size][grid_size];
 
     /**
      * @brief The current player's symbol ('X' or 'O').
