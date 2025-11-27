@@ -1,6 +1,6 @@
 CXX=g++
 #Compilation options
-CXXFLAGS=-W -Wall -ansi -pedantic -std=c++17
+CXXFLAGS=-W -Wall -ansi -pedantic -std=c++17 -g -O0
 LDFLAGS=
 EXEC=tictactoe_game
 
