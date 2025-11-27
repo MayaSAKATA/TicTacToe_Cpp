@@ -217,6 +217,26 @@ pair<int, int> TicTacToe::getComputerMove()
     return {0, 0};
 }
 
+pair<int, int> TicTacToe::ChosePosition()
+{
+    int row, col;
+    int choice = -1;
+    cout << "Chose a position : " << endl;
+    cin >> choice;
+
+    while (choice < 1 || choice > grid_size * grid_size)
+    {
+        cout << "Choice of of range. Chose a position :"
+             << endl;
+        cin >> choice;
+    }
+
+    row = (choice - 1) / grid_size;
+    col = (choice - 1) % grid_size;
+
+    return {row, col};
+}
+
 pair<bool, int> TicTacToe::Play()
 {
     pair<bool, int> result = {true, 0}; // first: continue game, second: continue/win/tie/lose status
@@ -225,18 +245,9 @@ pair<bool, int> TicTacToe::Play()
 
     if (difficulty == 0 || current_player == 'X')
     {
-        int choice = -1;
-        cout << "Chose a position : " << endl;
-        cin >> choice;
-        while (choice < 1 || choice > 9)
-        {
-            cout << "Choice of of range (1-9). Chose a position :" // to change because grid_size can change
-                 << endl;
-            cin >> choice;
-        }
-
-        row = (choice - 1) / grid_size;
-        col = (choice - 1) % grid_size;
+        pair<int, int> pos = ChosePosition();
+        row = pos.first;
+        col = pos.second;
 
         if (Board[row][col] != '_')
         {

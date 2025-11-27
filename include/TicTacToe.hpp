@@ -78,13 +78,20 @@ public:
      * @brief Retrieves a list of all empty cells on the board.
      * * @return std::vector<std::pair<int, int>> A vector of pairs (row, col) representing available moves.
      */
-    std::vector<std::pair<int, int>> getEmptyCells();
+    vector<pair<int, int>> getEmptyCells();
 
     /**
      * @brief Calculates the computer's next move based on the difficulty level.
      * * @return std::pair<int, int> The coordinates (row, col) selected by the computer.
      */
-    std::pair<int, int> getComputerMove();
+    pair<int, int> getComputerMove();
+
+    /**
+     * @brief Prompts the human player to choose a position on the board.
+     * * Validates input to ensure the chosen cell is empty and within bounds.
+     * @return pair<int, int> The coordinates (row, col) chosen by the player.
+     */
+    pair<int, int> ChosePosition();
 
     /**
      * @brief Switches the current player.
