@@ -113,6 +113,11 @@ public:
      */
     bool Tie();
 
+    /**
+     * @brief Manages a session of multiple games.
+     * * Resets the board and alternates starting players for each game.
+     * @param number_of_games The total number of games to be played in the session.
+     */
     void Session(int number_of_games);
 
     /**
