@@ -29,9 +29,24 @@ void TicTacToe::displayBoard()
     {
         for (int j = 0; j < grid_size; j++)
         {
+            string cell;
             // Displays the cell content or its number if empty
-            char c = (Board[i][j] == '_') ? ('0' + num) : Board[i][j];
-            cout << " " << c << " ";
+            if (Board[i][j] == '_')
+            {
+                if (num < 10)
+                {
+                    cell = " " + to_string(num);
+                }
+                else
+                {
+                    cell = to_string(num);
+                }
+            }
+            else
+            {
+                cell = Board[i][j];
+            }
+            cout << " " << cell << " ";
             if (j < grid_size - 1)
             {
                 cout << "|";
@@ -44,11 +59,11 @@ void TicTacToe::displayBoard()
             if (j != grid_size - 1)
             {
 
-                cout << "---+";
+                cout << "----+";
             }
             else
             {
-                cout << "---";
+                cout << "----";
             }
         }
         cout << endl;

@@ -24,9 +24,9 @@ class TicTacToe
 {
 private:
     /**
-     * @brief Static size of the grid (3x3).
+     * @brief Static size of the grid starting at 3x3.
      */
-    static const int grid_size = 5;
+    static const int grid_size = 3;
 
     /**
      * @brief Number of games to be played in a session
