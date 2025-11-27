@@ -5,10 +5,10 @@ using namespace std;
 int main()
 {
     int players, level, number_of_games;
-    cout << "Welcome to Tic Tac Toe!\n";
-    cout << "=======================\n";
+    cout << "\nWelcome to Tic Tac Toe!\n";
+    cout << "\n======================\n";
 
-    cout << "How many players?\n1. Two Players (Human vs Human)\n2. One Player (vs Computer)\n";
+    cout << "How many players?\n1. Two Players (Human vs Human)\n2. One Player (vs Computer)\n\nEnter your choice (1-2): ";
     cin >> players;
     while (players < 1 || players > 2)
     {
@@ -17,7 +17,7 @@ int main()
     }
     if (players == 2)
     {
-        cout << "\nSelect difficulty level:\n1. Easy\n2. Hard (not implemented)\nEnter your choice (1-2): ";
+        cout << "\nSelect difficulty level:\n1. Easy\n2. Hard (not implemented)\n\nEnter your choice (1-2): ";
         cin >> level;
         while (level < 1 || level > 2)
         {
