@@ -26,18 +26,18 @@ private:
     /**
      * @brief Static size of the grid starting at 3x3.
      */
-    static const int grid_size = 3;
+    static int grid_size;
 
     /**
      * @brief Number of games to be played in a session
      */
-    int number_of_games;
+    int number_of_games = 1;
 
     /**
      * @brief The game board represented by a 2D character array.
      * * Initialized with empty spaces ' '.
      */
-    char Board[grid_size][grid_size];
+    vector<vector<char>> Board;
 
     /**
      * @brief The current player's symbol ('X' or 'O').
@@ -124,7 +124,7 @@ public:
      * @return true If the move was valid and the game continues.
      * @return false If the game has ended or an error occurred.
      */
-    bool Play();
+    pair<bool, int> Play();
 };
 
 #endif

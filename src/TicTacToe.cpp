@@ -7,14 +7,20 @@
 
 #include "TicTacToe.hpp"
 
+int TicTacToe::grid_size = 3;
+
 using namespace std;
 
-TicTacToe::TicTacToe(int level, int games = 1)
+TicTacToe::TicTacToe(int level, int games)
 {
     current_player = 'X';
     difficulty = level;
     number_of_games = games;
     srand(time(0));
+
+    grid_size = 3;
+
+    Board.resize(grid_size, std::vector<char>(grid_size));
 
     // Initialize the board with empty positions
     for (int i = 0; i < grid_size; i++)
@@ -44,7 +50,7 @@ void TicTacToe::displayBoard()
             }
             else
             {
-                cell = Board[i][j];
+                cell = " " + string(1, Board[i][j]);
             }
             cout << " " << cell << " ";
             if (j < grid_size - 1)
@@ -174,7 +180,7 @@ bool TicTacToe::Tie()
     return true; // All cells are filled
 }
 
-std::vector<std::pair<int, int>> TicTacToe::getEmptyCells()
+vector<pair<int, int>> TicTacToe::getEmptyCells()
 {
     std::vector<std::pair<int, int>> empty_cells = {};
 
@@ -191,11 +197,11 @@ std::vector<std::pair<int, int>> TicTacToe::getEmptyCells()
     return empty_cells;
 }
 
-std::pair<int, int> TicTacToe::getComputerMove()
+pair<int, int> TicTacToe::getComputerMove()
 {
     if (difficulty == 1)
     {
-        std::vector<std::pair<int, int>> empty_cells = getEmptyCells();
+        vector<pair<int, int>> empty_cells = getEmptyCells();
         if (!empty_cells.empty()) // check if there are empty cells
         {
             int randomIndex = rand() % empty_cells.size(); // chose a random index to select an empty cell
@@ -209,8 +215,9 @@ std::pair<int, int> TicTacToe::getComputerMove()
     return {0, 0};
 }
 
-bool TicTacToe::Play()
+pair<bool, int> TicTacToe::Play()
 {
+    pair<bool, int> result = {true, 0}; // first: continue game, second: continue/win/tie/lose status
     int row, col;
     displayBoard();
 
@@ -221,7 +228,7 @@ bool TicTacToe::Play()
         cin >> choice;
         while (choice < 1 || choice > 9)
         {
-            cout << "Choice of of range (1-9). Chose a position :"
+            cout << "Choice of of range (1-9). Chose a position :" // to change because grid_size can change
                  << endl;
             cin >> choice;
         }
@@ -233,13 +240,13 @@ bool TicTacToe::Play()
         {
             cout << "Invalid choice, cell already occupied. Try again.\n"
                  << endl;
-            return true; // Continue the game
+            return {true, 0}; // Continue the game
         }
     }
     else
     {
         // Computer player's turn
-        std::pair<int, int> move = getComputerMove();
+        pair<int, int> move = getComputerMove();
         row = move.first;
         col = move.second;
         cout << "Computer chose position: " << (row * grid_size + col + 1) << '\n'
@@ -255,41 +262,41 @@ bool TicTacToe::Play()
         if (difficulty > 0 && current_player == 'O')
         {
             cout << "YOU LOSE...COMPUTER WINS\n"
-                 << endl; // Announce computer victory
+                 << endl;      // Announce computer victory
+            return {false, 3}; // Lost status
         }
         else
         {
             cout << "PLAYER '" << current_player << "' WINS\n"
-                 << endl; // Announce victory
+                 << endl;      // Announce victory
+            return {false, 1}; // Win status
         }
-
-        return false; // Stop the game
     }
 
     if (Tie()) // Check for Tie
     {
         displayBoard();
         cout << "It is a tie, play again!\n"
-             << endl; // Tie message
-        return false; // Stop the game
+             << endl;      // Tie message
+        return {false, 2}; // Stop the game & Tie status
     }
 
     Switchplayer(); // Switch to the next player
-    return true;    // Continue game
+    return result;  // Continue game
 }
 
 void TicTacToe::Session(int number_of_games)
 {
-
     while (number_of_games > 0)
     {
         Board_Reset();
         current_player = 'X'; // X always starts first
 
-        bool continue_game = true;
-        while (continue_game)
+        pair<bool, int> continue_game;
+        continue_game.first = true;
+        while (continue_game.first)
         {
-            continue_game = Play();
+            continue_game = Play(); // Play() returns (continue, win)=(true, 1)
         }
         number_of_games--;
         if (number_of_games == 0)
@@ -305,10 +312,26 @@ void TicTacToe::Session(int number_of_games)
             cout << "Thanks for playing!" << endl;
             break;
         }
-        else if (response == 'y' || response == 'Y')
+        else if (response == 'y' || response == 'Y') // play next game
         {
-            cout << "Starting next game...\n"
+            cout << "\nStarting next game...\n"
                  << endl;
+            switch (continue_game.second) // adjust grid size based on last game result
+            {
+            case 1: // win, increase grid size
+                if (-grid_size < 6)
+                {
+                    grid_size++;
+                }
+                break;
+            case 3: // lose, decrease grid size
+                grid_size = 3;
+                break;
+            case 2: // tie, replay with same grid size
+                break;
+            default:
+                break;
+            }
         }
     }
 }
