@@ -8,6 +8,20 @@ This project is an implementation of the classic **Tic-Tac-Toe** (Noughts and Cr
 2. **Phase two** : Dynamic levels against computer (random and intelligent agents) [IN PROGRESS]
 3. **Phase three** : Graphical implementation
 
+```
+TicTacToe
+├─ CMakeLists.txt
+├─ Makefile
+├─ README.md
+├─ include
+│  └─ TicTacToe.hpp
+├─ src
+│  ├─ TicTacToe.cpp
+│  └─ main.cpp
+└─ tests
+   └─ test_TicTacToe.cpp
+```
+
 ## Compilation and Execution
 
 This project uses a **Makefile** to automate the compilation process with 'g++'.
