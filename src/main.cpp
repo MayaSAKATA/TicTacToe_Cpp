@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @brief Entry point for the TicTacToe game application.
+ * @details Handles user interaction for game setup and starts the game session.
+ */
+
 #include "TicTacToe.hpp"
 
 using namespace std;
