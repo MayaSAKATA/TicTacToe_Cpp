@@ -20,11 +20,23 @@ Graphics::Graphics(TicTacToe &game) : game(game)
     window.setFramerateLimit(60);
 }
 
-void Graphics::drawCircle(int colonne, int ligne)
+void Graphics::drawCircle(int col, int row)
 {
+    // Blue circle
+    CircleShape circle(70.f);                    // Radius 70px
+    circle.setFillColor(sf::Color::Transparent); // Empty fill
+    circle.setOutlineThickness(10.f);            // Outline thickness
+    circle.setOutlineColor(sf::Color::Blue);
+
+    // Positioning the circle in the cell
+    float posX = col * 200.f + 30.f;
+    float posY = row * 200.f + 30.f;
+
+    circle.setPosition({posX, posY});
+    window.draw(circle);
 }
 
-void Graphics::drawCross(int colonne, int ligne) {}
+void Graphics::drawCross(int col, int row) {}
 
 void Graphics::drawGrid()
 {
