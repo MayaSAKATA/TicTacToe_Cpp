@@ -36,7 +36,27 @@ void Graphics::drawCircle(int col, int row)
     window.draw(circle);
 }
 
-void Graphics::drawCross(int col, int row) {}
+void Graphics::drawCross(int col, int row)
+{
+    // Red cross
+    RectangleShape line1(Vector2f(140.f, 10.f)); // First line of the cross
+    line1.setFillColor(sf::Color::Red);
+    line1.setRotation(degrees(45.f));
+
+    RectangleShape line2(Vector2f(140.f, 10.f)); // Second line of the cross
+    line2.setFillColor(sf::Color::Red);
+    line2.setRotation(degrees(-45.f));
+
+    // Positioning the cross in the cell
+    float posX = col * 200.f + 30.f;
+    float posY = row * 200.f + 30.f;
+
+    line1.setPosition({posX, posY + 70.f});
+    line2.setPosition({posX, posY + 70.f});
+
+    window.draw(line1);
+    window.draw(line2);
+}
 
 void Graphics::drawGrid()
 {
