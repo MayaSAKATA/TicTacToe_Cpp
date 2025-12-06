@@ -250,6 +250,18 @@ pair<int, int> TicTacToe::ChosePosition()
     return {row, col};
 }
 
+bool TicTacToe::playMove(int row, int col)
+{
+    if (Board[row][col] != '_')
+    {
+        return false;
+    }
+
+    Board[row][col] = current_player;
+
+    return true;
+}
+
 pair<bool, int> TicTacToe::Play()
 {
     pair<bool, int> result = {true, 0}; // first: continue game, second: continue/win/tie/lose status

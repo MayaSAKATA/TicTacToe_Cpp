@@ -102,6 +102,30 @@ void Graphics::drawPieces()
 
 void Graphics::processEvents()
 {
+    while (const auto event = window.pollEvent())
+    {
+        if (event->is<Event::Closed>())
+        {
+            window.close();
+        }
+        else if (const auto *mouseButton = event->getIf<Event::MouseButtonPressed>())
+        {
+            if (mouseButton->button == Mouse::Button::Left)
+            {
+                // Conversion pixels -> case du tableau
+                int col = mouseButton->position.x / CELL_SIZE;
+                int row = mouseButton->position.y / CELL_SIZE;
+
+                if (game.playMove(row, col))
+                {
+                    cout << "Action on " << row << "," << col << endl;
+
+                    // check for win or draw here if needed
+                    game.Switchplayer();
+                }
+            }
+        }
+    }
 }
 
 void Graphics::run()

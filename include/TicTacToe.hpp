@@ -107,6 +107,15 @@ public:
     pair<int, int> ChosePosition();
 
     /**
+     * @brief Plays a move for the current player at the specified position.
+     * @param row The row index where the player wants to place their symbol.
+     * @param col The column index where the player wants to place their symbol.
+     * @return true If the move was successful (cell was empty).
+     * @return false If the move was invalid (cell already occupied).
+     */
+    bool playMove(int row, int col);
+
+    /**
      * @brief Switches the current player.
      * * Toggles the 'current_player' attribute between 'X' and 'O'.
      */
