@@ -83,6 +83,21 @@ void Graphics::drawGrid()
 
 void Graphics::drawPieces()
 {
+    for (int row = 0; row < GRID_SIZE; row++)
+    {
+        for (int col = 0; col < GRID_SIZE; col++)
+        {
+            char cell = game.getCell(row, col);
+            if (cell == 'O')
+            {
+                drawCircle(col, row);
+            }
+            else if (cell == 'X')
+            {
+                drawCross(col, row);
+            }
+        }
+    }
 }
 
 void Graphics::processEvents()
