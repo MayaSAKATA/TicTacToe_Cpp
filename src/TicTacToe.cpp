@@ -27,6 +27,19 @@ TicTacToe::TicTacToe(int level, int games)
         for (int j = 0; j < grid_size; j++)
             Board[i][j] = '_';
 }
+int TicTacToe::getGridSize() const
+{
+    return grid_size;
+}
+
+char TicTacToe::getCell(int row, int col) const
+{
+    if (row >= 0 && row < grid_size && col >= 0 && col < grid_size)
+    {
+        return Board[row][col];
+    }
+    return '_'; // Retourne vide si hors limites
+}
 
 void TicTacToe::displayBoard()
 {

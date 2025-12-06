@@ -63,6 +63,19 @@ public:
     TicTacToe(int difficulty, int number_of_games);
 
     /**
+     * @brief Retrieves the size of the game grid.
+     */
+    int getGridSize() const;
+
+    /**
+     * @brief Retrieves the content of a specific cell on the board.
+     * @param row The row index of the cell.
+     * @param col The column index of the cell.
+     * @return char The character in the specified cell ('X', 'O', or '_').
+     */
+    char getCell(int row, int col) const;
+
+    /**
      * @brief Displays the current game board to the console.
      * * This function formats and prints the 3x3 grid.
      */
