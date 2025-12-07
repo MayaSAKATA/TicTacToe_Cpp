@@ -16,7 +16,9 @@ using namespace sf;
 
 Graphics::Graphics(TicTacToe &game) : game(game)
 {
-    window.create(VideoMode({(unsigned int)(GRID_SIZE * CELL_SIZE), (unsigned int)(GRID_SIZE * CELL_SIZE)}), "Tic Tac Toe");
+    int gridSize = game.getGridSize();
+
+    window.create(VideoMode({(unsigned int)(gridSize * CELL_SIZE), (unsigned int)(gridSize * CELL_SIZE)}), "Tic Tac Toe");
     window.setFramerateLimit(60);
 }
 
@@ -27,7 +29,7 @@ void Graphics::drawCircle(int col, int row)
     circle.setFillColor(Color::Transparent); // Empty fill
     circle.setOutlineThickness(10.f);        // Outline thickness
     circle.setOutlineColor(Color::Blue);
-    circle.setOrigin({60.f, 60.f}); // Centre du cercle (rayon, rayon)
+    circle.setOrigin({60.f, 60.f}); // Center of the circle (radius, radius)
 
     // Positioning the circle at the center of the cell
     float centerX = col * CELL_SIZE + CELL_SIZE / 2.f;
@@ -64,20 +66,20 @@ void Graphics::drawCross(int col, int row)
 void Graphics::drawGrid()
 {
     Color gridColor = Color::Black;
-
+    int gridSize = game.getGridSize();
     // Vertical lines
-    for (int i = 1; i < GRID_SIZE; i++)
+    for (int i = 1; i < gridSize; i++)
     {
-        RectangleShape line(Vector2f(5, CELL_SIZE * GRID_SIZE));
+        RectangleShape line(Vector2f(5, CELL_SIZE * gridSize));
         line.setPosition(Vector2f(i * CELL_SIZE, 0));
         line.setFillColor(gridColor);
         window.draw(line);
     }
 
     // Horizontal lines
-    for (int i = 1; i < GRID_SIZE; i++)
+    for (int i = 1; i < gridSize; i++)
     {
-        RectangleShape line(Vector2f(CELL_SIZE * GRID_SIZE, 5));
+        RectangleShape line(Vector2f(CELL_SIZE * gridSize, 5));
         line.setPosition(Vector2f(0, i * CELL_SIZE));
         line.setFillColor(gridColor);
         window.draw(line);
@@ -86,9 +88,11 @@ void Graphics::drawGrid()
 
 void Graphics::drawPieces()
 {
-    for (int row = 0; row < GRID_SIZE; row++)
+    int gridSize = game.getGridSize();
+
+    for (int row = 0; row < gridSize; row++)
     {
-        for (int col = 0; col < GRID_SIZE; col++)
+        for (int col = 0; col < gridSize; col++)
         {
             char cell = game.getCell(row, col);
             if (cell == 'O')
@@ -105,6 +109,9 @@ void Graphics::drawPieces()
 
 void Graphics::processEvents()
 {
+    int gridSize = game.getGridSize();
+    char current_player = game.getCurrentPlayer();
+
     while (const auto event = window.pollEvent())
     {
         if (event->is<Event::Closed>())
@@ -115,7 +122,7 @@ void Graphics::processEvents()
         {
             if (mouseButton->button == Mouse::Button::Left)
             {
-                // Conversion pixels -> case du tableau
+                // Conversion pixels -> grid coordinates
                 int col = mouseButton->position.x / CELL_SIZE;
                 int row = mouseButton->position.y / CELL_SIZE;
 
@@ -123,7 +130,34 @@ void Graphics::processEvents()
                 {
                     cout << "Click on " << row << "," << col << endl;
 
-                    // check for win or draw here if needed
+                    // Check for win
+                    if (game.Win(row, col, current_player))
+                    {
+                        cout << "PLAYER '" << current_player << "' WINS!" << endl;
+                        // Draw final state
+                        window.clear(Color::White);
+                        drawGrid();
+                        drawPieces();
+                        window.display();
+
+                        // Wait before closing
+                        sf::sleep(sf::seconds(2));
+                        window.close();
+                        return;
+                    }
+                    // Check for tie
+                    if (game.Tie())
+                    {
+                        cout << "It's a TIE!" << endl;
+                        window.clear(Color::White);
+                        drawGrid();
+                        drawPieces();
+                        window.display();
+
+                        sf::sleep(sf::seconds(2));
+                        window.close();
+                        return;
+                    }
                     game.Switchplayer();
                 }
             }

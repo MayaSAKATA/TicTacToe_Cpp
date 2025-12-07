@@ -38,8 +38,10 @@ char TicTacToe::getCell(int row, int col) const
     {
         return Board[row][col];
     }
-    return '_'; // Retourne vide si hors limites
+    return '_';
 }
+
+char TicTacToe::getCurrentPlayer() const { return current_player; }
 
 void TicTacToe::displayBoard()
 {

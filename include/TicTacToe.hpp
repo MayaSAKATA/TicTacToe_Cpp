@@ -76,6 +76,12 @@ public:
     char getCell(int row, int col) const;
 
     /**
+     * @brief Retrieves the current player's symbol.
+     * @return char The symbol of the current player ('X' or 'O').
+     */
+    char getCurrentPlayer() const;
+
+    /**
      * @brief Displays the current game board to the console.
      * * This function formats and prints the 3x3 grid.
      */
