@@ -27,7 +27,7 @@ private:
     RenderWindow window;
     TicTacToe &game;
 
-    const unsigned int CELL_SIZE = 150; // Size of each cell in pixels
+    const unsigned int CELL_SIZE = 200; // Size of each cell in pixels
     const unsigned int GRID_SIZE = 3;
 
     void drawGrid();

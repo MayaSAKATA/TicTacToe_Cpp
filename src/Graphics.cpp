@@ -23,36 +23,39 @@ Graphics::Graphics(TicTacToe &game) : game(game)
 void Graphics::drawCircle(int col, int row)
 {
     // Blue circle
-    CircleShape circle(70.f);                    // Radius 70px
-    circle.setFillColor(sf::Color::Transparent); // Empty fill
-    circle.setOutlineThickness(10.f);            // Outline thickness
-    circle.setOutlineColor(sf::Color::Blue);
+    CircleShape circle(60.f);                // Radius 60px
+    circle.setFillColor(Color::Transparent); // Empty fill
+    circle.setOutlineThickness(10.f);        // Outline thickness
+    circle.setOutlineColor(Color::Blue);
+    circle.setOrigin({60.f, 60.f}); // Centre du cercle (rayon, rayon)
 
-    // Positioning the circle in the cell
-    float posX = col * 200.f + 30.f;
-    float posY = row * 200.f + 30.f;
+    // Positioning the circle at the center of the cell
+    float centerX = col * CELL_SIZE + CELL_SIZE / 2.f;
+    float centerY = row * CELL_SIZE + CELL_SIZE / 2.f;
 
-    circle.setPosition({posX, posY});
+    circle.setPosition({centerX, centerY});
     window.draw(circle);
 }
 
 void Graphics::drawCross(int col, int row)
 {
     // Red cross
-    RectangleShape line1(Vector2f(140.f, 10.f)); // First line of the cross
-    line1.setFillColor(sf::Color::Red);
+    RectangleShape line1({140.f, 10.f}); // First line of the cross
+    line1.setFillColor(Color::Red);
+    line1.setOrigin({70.f, 5.f});
     line1.setRotation(degrees(45.f));
 
-    RectangleShape line2(Vector2f(140.f, 10.f)); // Second line of the cross
-    line2.setFillColor(sf::Color::Red);
+    RectangleShape line2({140.f, 10.f}); // Second line of the cross
+    line2.setFillColor(Color::Red);
+    line2.setOrigin({70.f, 5.f});
     line2.setRotation(degrees(-45.f));
 
-    // Positioning the cross in the cell
-    float posX = col * 200.f + 30.f;
-    float posY = row * 200.f + 30.f;
+    // Positioning the cross at the center of the cell
+    float centerX = col * CELL_SIZE + CELL_SIZE / 2.f;
+    float centerY = row * CELL_SIZE + CELL_SIZE / 2.f;
 
-    line1.setPosition({posX, posY + 70.f});
-    line2.setPosition({posX, posY + 70.f});
+    line1.setPosition({centerX, centerY});
+    line2.setPosition({centerX, centerY});
 
     window.draw(line1);
     window.draw(line2);
@@ -118,7 +121,7 @@ void Graphics::processEvents()
 
                 if (game.playMove(row, col))
                 {
-                    cout << "Action on " << row << "," << col << endl;
+                    cout << "Click on " << row << "," << col << endl;
 
                     // check for win or draw here if needed
                     game.Switchplayer();
