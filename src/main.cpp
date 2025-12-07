@@ -50,7 +50,7 @@ int main()
 
     //     Game.Session(number_of_games);
 
-    TicTacToe game = TicTacToe(level, number_of_games);
+    TicTacToe game(level, number_of_games);
     Graphics graphics(game);
     graphics.run();
 

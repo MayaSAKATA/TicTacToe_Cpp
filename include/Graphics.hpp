@@ -27,13 +27,21 @@ private:
     RenderWindow window;
     TicTacToe &game;
 
+    bool gameOver;
+    int lastGameResult;
+    int maxGames;
+    int gamesPlayed;
+
     const unsigned int CELL_SIZE = 200; // Hardcoded size of each cell in pixels
 
     void drawGrid();
     void drawPieces();
-    void processEvents();
     void drawCircle(int colonne, int ligne);
     void drawCross(int colonne, int ligne);
+
+    void updateWindowSize();
+    void handleNextGame();
+    void processEvents();
 
 public:
     Graphics(TicTacToe &game);

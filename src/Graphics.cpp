@@ -11,14 +11,16 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include <thread> // for delay
+#include <chrono>
+
 using namespace std;
 using namespace sf;
 
-Graphics::Graphics(TicTacToe &game) : game(game)
+Graphics::Graphics(TicTacToe &game) : game(game), gameOver(false), lastGameResult(0), gamesPlayed(0)
 {
-    int gridSize = game.getGridSize();
-
-    window.create(VideoMode({(unsigned int)(gridSize * CELL_SIZE), (unsigned int)(gridSize * CELL_SIZE)}), "Tic Tac Toe");
+    maxGames = game.getNumberOfGames();
+    updateWindowSize();
     window.setFramerateLimit(60);
 }
 
@@ -107,10 +109,53 @@ void Graphics::drawPieces()
     }
 }
 
+void Graphics::updateWindowSize()
+{
+    int gridSize = game.getGridSize();
+    if (window.isOpen())
+    {
+        window.close();
+    }
+    window.create(VideoMode({(unsigned int)(gridSize * CELL_SIZE), (unsigned int)(gridSize * CELL_SIZE)}), "Tic Tac Toe");
+    window.setFramerateLimit(60);
+}
+
+void Graphics::handleNextGame()
+{
+    int gridSize = game.getGridSize();
+    // Ajust grid size based on last game result
+    switch (lastGameResult)
+    {
+    case 1: // Win - increase grid size
+        if (gridSize < 6)
+        {
+            game.setGridSize(gridSize++);
+            updateWindowSize();
+        }
+        break;
+    case 3: // Lose - set grid to 3x3
+        game.setGridSize(3);
+        updateWindowSize();
+        break;
+    case 2: // Tie - same grid size
+        break;
+    }
+
+    // Reset game state
+    game.Board_Reset();
+    game.setCurrentPlayer('X');
+    gameOver = false;
+    lastGameResult = 0;
+
+    cout << "\nStarting next game... (Grid size: " << game.getGridSize() << "x" << game.getGridSize() << ")\n"
+         << endl;
+    cout << "\nGame " << gamesPlayed + 1 << " / " << maxGames << "\n"
+         << endl;
+}
+
 void Graphics::processEvents()
 {
     int gridSize = game.getGridSize();
-    char current_player = game.getCurrentPlayer();
 
     while (const auto event = window.pollEvent())
     {
@@ -118,47 +163,116 @@ void Graphics::processEvents()
         {
             window.close();
         }
+        else if (const auto *key = event->getIf<Event::KeyPressed>())
+        {
+            if (gameOver)
+            {
+                if (key->code == Keyboard::Key::Space)
+                {
+                    // Check if more games are allowed
+                    if (gamesPlayed < maxGames)
+                    {
+                        handleNextGame();
+                    }
+                    else
+                    {
+                        cout << "\nSession over! All " << maxGames << " games completed." << endl;
+                        cout << "Thanks for playing!" << endl;
+                        window.close();
+                    }
+                }
+                else if (key->code == Keyboard::Key::Escape)
+                {
+                    cout << "Thanks for playing! Games completed: " << gamesPlayed << " / " << maxGames << endl;
+                    window.close();
+                }
+            }
+        }
         else if (const auto *mouseButton = event->getIf<Event::MouseButtonPressed>())
         {
-            if (mouseButton->button == Mouse::Button::Left)
+            if (!gameOver && mouseButton->button == Mouse::Button::Left)
             {
-                // Conversion pixels -> grid coordinates
                 int col = mouseButton->position.x / CELL_SIZE;
                 int row = mouseButton->position.y / CELL_SIZE;
 
-                if (game.playMove(row, col))
+                if (row >= 0 && row < gridSize && col >= 0 && col < gridSize)
                 {
-                    cout << "Click on " << row << "," << col << endl;
+                    // Save current player
+                    char currentPlayer = game.getCurrentPlayer();
 
-                    // Check for win
-                    if (game.Win(row, col, current_player))
+                    // Try to play the move
+                    if (game.playMove(row, col))
                     {
-                        cout << "PLAYER '" << current_player << "' WINS!" << endl;
-                        // Draw final state
-                        window.clear(Color::White);
-                        drawGrid();
-                        drawPieces();
-                        window.display();
+                        cout << "Player '" << currentPlayer << "' plays (" << row << "," << col << ")" << endl;
 
-                        // Wait before closing
-                        sf::sleep(sf::seconds(2));
-                        window.close();
-                        return;
+                        // Check for win
+                        if (game.Win(row, col, currentPlayer))
+                        {
+                            if (game.getDifficulty() > 0 && currentPlayer == 'O')
+                            {
+                                cout << "\nCOMPUTER WINS!" << endl;
+                                lastGameResult = 3;
+                            }
+                            else
+                            {
+                                cout << "\nPLAYER '" << currentPlayer << "' WINS!" << endl;
+                                lastGameResult = 1;
+                            }
+                            gameOver = true;
+                            gamesPlayed++;
+                            return;
+                        }
+
+                        // Check for tie
+                        if (game.Tie())
+                        {
+                            cout << "\nIT'S A TIE!" << endl;
+                            lastGameResult = 2;
+                            gameOver = true;
+                            gamesPlayed++;
+                            return;
+                        }
+
+                        // Change player
+                        game.Switchplayer();
+
+                        // If it is the computer's turn
+                        if (game.getDifficulty() > 0 && game.getCurrentPlayer() == 'O')
+                        {
+                            pair<int, int> computerMove = game.getComputerMove();
+                            int compRow = computerMove.first;
+                            int compCol = computerMove.second;
+
+                            if (game.playMove(compRow, compCol))
+                            {
+                                cout << "Computer plays (" << compRow << "," << compCol << ")" << endl;
+
+                                if (game.Win(compRow, compCol, game.getCurrentPlayer()))
+                                {
+                                    cout << "\nCOMPUTER WINS!" << endl;
+                                    lastGameResult = 3;
+                                    gameOver = true;
+                                    gamesPlayed++;
+                                    return;
+                                }
+
+                                if (game.Tie())
+                                {
+                                    cout << "\nIT'S A TIE!" << endl;
+                                    lastGameResult = 2;
+                                    gameOver = true;
+                                    gamesPlayed++;
+                                    return;
+                                }
+
+                                game.Switchplayer();
+                            }
+                        }
                     }
-                    // Check for tie
-                    if (game.Tie())
+                    else
                     {
-                        cout << "It's a TIE!" << endl;
-                        window.clear(Color::White);
-                        drawGrid();
-                        drawPieces();
-                        window.display();
-
-                        sf::sleep(sf::seconds(2));
-                        window.close();
-                        return;
+                        cout << "\nCell already occupied!" << endl;
                     }
-                    game.Switchplayer();
                 }
             }
         }
@@ -167,12 +281,15 @@ void Graphics::processEvents()
 
 void Graphics::run()
 {
+    cout << "Starting session: " << maxGames << " game(s)" << endl;
+    cout << "\nGame " << gamesPlayed + 1 << " / " << maxGames << "\n"
+         << endl;
+
     while (window.isOpen())
     {
         processEvents();
 
         window.clear(Color::White);
-
         drawGrid();
         drawPieces();
 
