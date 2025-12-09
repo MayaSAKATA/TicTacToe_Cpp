@@ -27,11 +27,12 @@ Graphics::Graphics(TicTacToe &game) : game(game), gameOver(false), lastGameResul
 void Graphics::drawCircle(int col, int row)
 {
     // Blue circle
-    CircleShape circle(60.f);                // Radius 60px
-    circle.setFillColor(Color::Transparent); // Empty fill
-    circle.setOutlineThickness(10.f);        // Outline thickness
+    float radius = CELL_SIZE * 0.3f; // 30% of the size of the cell
+    CircleShape circle(radius);
+    circle.setFillColor(Color::Transparent);       // Empty fill
+    circle.setOutlineThickness(CELL_SIZE * 0.05f); // 5% of the size of the cell
     circle.setOutlineColor(Color::Blue);
-    circle.setOrigin({60.f, 60.f}); // Center of the circle (radius, radius)
+    circle.setOrigin({radius, radius}); // Center of the circle (radius, radius)
 
     // Positioning the circle at the center of the cell
     float centerX = col * CELL_SIZE + CELL_SIZE / 2.f;
@@ -44,14 +45,17 @@ void Graphics::drawCircle(int col, int row)
 void Graphics::drawCross(int col, int row)
 {
     // Red cross
-    RectangleShape line1({140.f, 10.f}); // First line of the cross
+    float lineLength = CELL_SIZE * 0.7f;     // 70% of the size of the cell
+    float lineThickness = CELL_SIZE * 0.05f; // 5% of the size of the cell
+
+    RectangleShape line1({lineLength, lineThickness}); // First line of the cross
     line1.setFillColor(Color::Red);
-    line1.setOrigin({70.f, 5.f});
+    line1.setOrigin({lineLength / 2.f, lineThickness / 2.f});
     line1.setRotation(degrees(45.f));
 
-    RectangleShape line2({140.f, 10.f}); // Second line of the cross
+    RectangleShape line2({lineLength, lineThickness}); // Second line of the cross
     line2.setFillColor(Color::Red);
-    line2.setOrigin({70.f, 5.f});
+    line2.setOrigin({lineLength / 2.f, lineThickness / 2.f});
     line2.setRotation(degrees(-45.f));
 
     // Positioning the cross at the center of the cell
@@ -117,6 +121,7 @@ void Graphics::updateWindowSize()
         window.close();
     }
     window.create(VideoMode({(unsigned int)(gridSize * CELL_SIZE), (unsigned int)(gridSize * CELL_SIZE)}), "Tic Tac Toe");
+    window.setPosition({900, 100});
     window.setFramerateLimit(60);
 }
 
@@ -129,7 +134,8 @@ void Graphics::handleNextGame()
     case 1: // Win - increase grid size
         if (gridSize < 6)
         {
-            game.setGridSize(gridSize++);
+            gridSize++;
+            game.setGridSize(gridSize);
             updateWindowSize();
         }
         break;
@@ -164,20 +170,23 @@ void Graphics::handleSpaceKey()
         if (maxGames == 1)
         {
 
-            cout << "\nGame over! Thanks for playing!" << endl;
+            cout << "\nGame over!\n"
+                 << endl;
         }
         else
         {
             cout << "\nSession over! All " << maxGames << " games completed." << endl;
-            cout << "Thanks for playing!" << endl;
         }
+        cout << "Thanks for playing!\n"
+             << endl;
         window.close();
     }
 }
 
 void Graphics::handleEscapeKey()
 {
-    cout << "Thanks for playing! Games completed: " << gamesPlayed << " / " << maxGames << endl;
+    cout << "\nThanks for playing! Games completed: " << gamesPlayed << " / " << maxGames << "\n"
+         << endl;
     window.close();
 }
 

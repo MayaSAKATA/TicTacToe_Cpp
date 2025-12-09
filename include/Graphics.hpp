@@ -55,7 +55,7 @@ private:
     /**
      * @brief Size of each cell in pixels
      */
-    const unsigned int CELL_SIZE = 200; // Hardcoded size of each cell in pixels
+    const unsigned int CELL_SIZE = 100; // Hardcoded size of each cell in pixels
 
     // DRAWING METHODS
 

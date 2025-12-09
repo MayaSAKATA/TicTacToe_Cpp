@@ -14,13 +14,13 @@ using namespace std;
 TicTacToe::TicTacToe(int level, int games)
 {
     current_player = 'X';
-    difficulty = level;
+    difficulty = level; // Computer move difficulty : 1. easy, 2. hard
     number_of_games = games;
     srand(time(0));
 
-    grid_size = 3;
+    grid_size = 3; // Initial grid size starting at 3x3
 
-    Board.resize(grid_size, std::vector<char>(grid_size));
+    Board.resize(grid_size, std::vector<char>(grid_size)); // Resize the board to grid_size x grid_size
 
     // Initialize the board with empty positions
     for (int i = 0; i < grid_size; i++)
@@ -239,7 +239,7 @@ vector<pair<int, int>> TicTacToe::getEmptyCells()
 
 pair<int, int> TicTacToe::getComputerMove()
 {
-    if (difficulty == 1)
+    if (difficulty == 1) // Easy difficulty: random move
     {
         vector<pair<int, int>> empty_cells = getEmptyCells();
         if (!empty_cells.empty()) // check if there are empty cells
@@ -248,7 +248,7 @@ pair<int, int> TicTacToe::getComputerMove()
             return empty_cells[randomIndex];               // returns (row, col) of the selected cell
         }
     }
-    if (difficulty == 2)
+    if (difficulty == 2) // Hard difficulty: minimax agent
     {
         // Hard difficulty logic can be implemented here
     }
