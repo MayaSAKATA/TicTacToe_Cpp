@@ -213,7 +213,7 @@ pair<int, int> TicTacToe::getComputerMove()
     if (difficulty == 2)
     {
         // Hard difficulty logic can be implemented here
-        return BestMove(); 
+        return BestMove();
     }
     return {0, 0};
 }
@@ -356,36 +356,36 @@ void TicTacToe::Session(int number_of_games)
 bool TicTacToe::WinState(char current_player)
 {
     // Check all rows
-    for (int i = 0; i < grid_size; ++i) 
+    for (int i = 0; i < grid_size; ++i)
     {
         bool Check = true;
-        for (int j = 0; j < grid_size; ++j) 
+        for (int j = 0; j < grid_size; ++j)
         {
-            if (Board[i][j] != current_player) 
-            {   
-                Check = false; 
-                break; 
+            if (Board[i][j] != current_player)
+            {
+                Check = false;
+                break;
             }
         }
-        if (Check) 
+        if (Check)
         {
             return true;
         }
     }
 
     // Check all columns
-    for (int j = 0; j < grid_size; ++j) 
+    for (int j = 0; j < grid_size; ++j)
     {
         bool Check = true;
-        for (int i = 0; i < grid_size; ++i) 
+        for (int i = 0; i < grid_size; ++i)
         {
-            if (Board[i][j] != current_player) 
-            {   
-                Check = false; 
-                break; 
+            if (Board[i][j] != current_player)
+            {
+                Check = false;
+                break;
             }
         }
-        if (Check) 
+        if (Check)
         {
             return true;
         }
@@ -393,30 +393,30 @@ bool TicTacToe::WinState(char current_player)
 
     // Check the main diagonal
     bool Check = true;
-    for (int i = 0; i < grid_size; ++i) 
+    for (int i = 0; i < grid_size; ++i)
     {
-        if (Board[i][i] != current_player) 
-        {   
-            Check = false; 
-            break; 
+        if (Board[i][i] != current_player)
+        {
+            Check = false;
+            break;
         }
     }
     if (Check)
     {
         return true;
-    } 
+    }
 
     // Check the anti-diagonal
     Check = true;
-    for (int i = 0; i < grid_size; ++i) 
+    for (int i = 0; i < grid_size; ++i)
     {
-        if (Board[i][grid_size - 1 - i] != current_player) 
-        { 
+        if (Board[i][grid_size - 1 - i] != current_player)
+        {
             Check = false;
-            break; 
+            break;
         }
     }
-    if (Check) 
+    if (Check)
     {
         return true;
     }
@@ -424,14 +424,12 @@ bool TicTacToe::WinState(char current_player)
     return false;
 }
 
-
-
 // Minimax algorithm with alpha-beta pruning.
 // The AI ('O') tries to maximize the score, while the human ('X') tries to minimize it.
 // Depth is used both to limit recursion and to reward faster wins.
 // Randomness is injected to make the AI less predictable.
 int TicTacToe::Minimax(bool isMaximizing, int Depth, int alpha, int beta)
-{   
+{
     // Terminal evaluation: AI wins
     if (WinState('O'))
     {
@@ -523,23 +521,22 @@ int TicTacToe::Minimax(bool isMaximizing, int Depth, int alpha, int beta)
     }
 }
 
-
-
 // Computes the best move for the AI using minimax and optional randomness.
 // Returns a pair {row, column}.
-std::pair<int,int> TicTacToe::BestMove()
+std::pair<int, int> TicTacToe::BestMove()
 {
     int bestScore = 100;
-    std::pair<int,int> bestMove = {-1, -1};
+    std::pair<int, int> bestMove = {-1, -1};
+    int randomChance = 0;
 
     // Set search depth depending on board size
     int Depth = 0;
 
     if (grid_size <= 3)
     {
-        randomChance = 70;  // 70% chance to make a random move on small boards
+        randomChance = 70; // 70% chance to make a random move on small boards
         Depth = 3;
-    } 
+    }
     else
     {
         Depth = 4;
