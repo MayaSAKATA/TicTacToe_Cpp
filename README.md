@@ -42,7 +42,26 @@ cd open documentation/html/index.html
 
 ## Compilation and Execution
 
-This project uses a **Makefile** to automate the compilation process with 'g++'.
+This project uses a **Makefile** to automate the compilation process with `g++`.
+
+Install [CMake](https://cmake.org/download/).
+
+You will also need to install the **latest version** (v3) of Catch2 and the SFML library :
+
+```bash
+brew install sfml catch2 # MacOS
+sudo apt install libsfml-dev catch2 # Ubuntu/Debian
+```
+
+To launch the game :
+
+```bash
+mkdir build
+cd build
+cmake ..
+make
+./PlayTicTacToe
+```
 
 ## Useful git commands
 
