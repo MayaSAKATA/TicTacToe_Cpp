@@ -139,7 +139,6 @@ void TicTacToe::Switchplayer()
 
 bool TicTacToe::Win(int row, int col, char current_player)
 {
-
     // Check for horizontal win on the current line
     bool win_line = true;
     for (int c = 0; c < grid_size; c++)

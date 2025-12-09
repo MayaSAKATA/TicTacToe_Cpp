@@ -161,8 +161,16 @@ void Graphics::handleSpaceKey()
     }
     else
     {
-        cout << "\nSession over! All " << maxGames << " games completed." << endl;
-        cout << "Thanks for playing!" << endl;
+        if (maxGames == 1)
+        {
+
+            cout << "\nGame over! Thanks for playing!" << endl;
+        }
+        else
+        {
+            cout << "\nSession over! All " << maxGames << " games completed." << endl;
+            cout << "Thanks for playing!" << endl;
+        }
         window.close();
     }
 }
@@ -327,9 +335,12 @@ void Graphics::processEvents()
 
 void Graphics::run()
 {
-    cout << "Starting session: " << maxGames << " game(s)" << endl;
-    cout << "\nGame " << gamesPlayed + 1 << " / " << maxGames << "\n"
-         << endl;
+    if (maxGames < 1)
+    {
+        cout << "Starting session: " << maxGames << " games" << endl;
+        cout << "\nGame " << gamesPlayed + 1 << " / " << maxGames << "\n"
+             << endl;
+    }
 
     while (window.isOpen())
     {

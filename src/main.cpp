@@ -42,8 +42,11 @@ int main()
     {
         level = 0; // Two players mode
     }
-    cout << "\nHow many games in a row? ";
-    cin >> number_of_games;
+    while (number_of_games <= 0)
+    {
+        cout << "\nHow many games in a row? ";
+        cin >> number_of_games;
+    }
 
     cout << "\nLet's play! Opening game window...\n";
     this_thread::sleep_for(chrono::seconds(1)); // 2 seconds delay
