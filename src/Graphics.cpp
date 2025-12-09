@@ -153,10 +153,161 @@ void Graphics::handleNextGame()
          << endl;
 }
 
+void Graphics::handleSpaceKey()
+{
+    if (gamesPlayed < maxGames)
+    {
+        handleNextGame();
+    }
+    else
+    {
+        cout << "\nSession over! All " << maxGames << " games completed." << endl;
+        cout << "Thanks for playing!" << endl;
+        window.close();
+    }
+}
+
+void Graphics::handleEscapeKey()
+{
+    cout << "Thanks for playing! Games completed: " << gamesPlayed << " / " << maxGames << endl;
+    window.close();
+}
+
+void Graphics::handleKeyPressed(const Event::KeyPressed *key)
+{
+    if (!gameOver)
+        return; // Only process keys if the game is over
+
+    if (key->code == Keyboard::Key::Space)
+    {
+        handleSpaceKey();
+    }
+    else if (key->code == Keyboard::Key::Escape)
+    {
+        handleEscapeKey();
+    }
+}
+
+void Graphics::handleMousePressed(const Event::MouseButtonPressed *mouseButton)
+{
+    if (gameOver || mouseButton->button != Mouse::Button::Left)
+        return;
+
+    int gridSize = game.getGridSize();
+    int col = mouseButton->position.x / CELL_SIZE;
+    int row = mouseButton->position.y / CELL_SIZE;
+
+    // Vérifier que le clic est dans la grille
+    if (row < 0 || row >= gridSize || col < 0 || col >= gridSize)
+        return;
+
+    handlePlayerMove(row, col);
+}
+
+void Graphics::handlePlayerMove(int row, int col)
+{
+    char currentPlayer = game.getCurrentPlayer();
+
+    if (!game.playMove(row, col))
+    {
+        cout << "\nCell already occupied!" << endl;
+        return;
+    }
+
+    cout << "Player '" << currentPlayer << "' plays (" << row << "," << col << ")" << endl;
+
+    // Vérifier victoire
+    if (game.Win(row, col, currentPlayer))
+    {
+        handlePlayerWin(currentPlayer);
+        return;
+    }
+
+    // Vérifier égalité
+    if (game.Tie())
+    {
+        handleTie();
+        return;
+    }
+
+    // Changer de joueur et gérer le tour de l'ordinateur si nécessaire
+    game.Switchplayer();
+
+    if (game.getDifficulty() > 0 && game.getCurrentPlayer() == 'O')
+    {
+        handleComputerMove();
+    }
+}
+
+void Graphics::handlePlayerWin(char player)
+{
+    if (game.getDifficulty() > 0 && player == 'O')
+    {
+        cout << "\nCOMPUTER WINS!" << endl;
+        lastGameResult = 3;
+    }
+    else
+    {
+        cout << "\nPLAYER '" << player << "' WINS!" << endl;
+        lastGameResult = 1;
+    }
+
+    cout << "\nPress SPACE to play next round, ESC to quit the game\n"
+         << endl;
+    gameOver = true;
+    gamesPlayed++;
+}
+
+void Graphics::handleTie()
+{
+    cout << "\nIT'S A TIE!" << endl;
+    cout << "\nPress SPACE to play next round, ESC to quit the game\n"
+         << endl;
+    lastGameResult = 2;
+    gameOver = true;
+    gamesPlayed++;
+}
+
+void Graphics::handleComputerMove()
+{
+    pair<int, int> computerMove = game.getComputerMove();
+    int compRow = computerMove.first;
+    int compCol = computerMove.second;
+
+    if (!game.playMove(compRow, compCol))
+        return;
+
+    cout << "Computer plays (" << compRow << "," << compCol << ")" << endl;
+
+    // Vérifier victoire de l'ordinateur
+    if (game.Win(compRow, compCol, game.getCurrentPlayer()))
+    {
+        cout << "\nCOMPUTER WINS!" << endl;
+        cout << "\nPress SPACE to play next round, ESC to quit the game\n"
+             << endl;
+        lastGameResult = 3;
+        gameOver = true;
+        gamesPlayed++;
+        return;
+    }
+
+    // Vérifier égalité
+    if (game.Tie())
+    {
+        cout << "\nIT'S A TIE!" << endl;
+        cout << "\nPress SPACE to play next round, ESC to quit the game\n"
+             << endl;
+        lastGameResult = 2;
+        gameOver = true;
+        gamesPlayed++;
+        return;
+    }
+
+    game.Switchplayer();
+}
+
 void Graphics::processEvents()
 {
-    int gridSize = game.getGridSize();
-
     while (const auto event = window.pollEvent())
     {
         if (event->is<Event::Closed>())
@@ -165,116 +316,11 @@ void Graphics::processEvents()
         }
         else if (const auto *key = event->getIf<Event::KeyPressed>())
         {
-            if (gameOver)
-            {
-                if (key->code == Keyboard::Key::Space)
-                {
-                    // Check if more games are allowed
-                    if (gamesPlayed < maxGames)
-                    {
-                        handleNextGame();
-                    }
-                    else
-                    {
-                        cout << "\nSession over! All " << maxGames << " games completed." << endl;
-                        cout << "Thanks for playing!" << endl;
-                        window.close();
-                    }
-                }
-                else if (key->code == Keyboard::Key::Escape)
-                {
-                    cout << "Thanks for playing! Games completed: " << gamesPlayed << " / " << maxGames << endl;
-                    window.close();
-                }
-            }
+            handleKeyPressed(key);
         }
         else if (const auto *mouseButton = event->getIf<Event::MouseButtonPressed>())
         {
-            if (!gameOver && mouseButton->button == Mouse::Button::Left)
-            {
-                int col = mouseButton->position.x / CELL_SIZE;
-                int row = mouseButton->position.y / CELL_SIZE;
-
-                if (row >= 0 && row < gridSize && col >= 0 && col < gridSize)
-                {
-                    // Save current player
-                    char currentPlayer = game.getCurrentPlayer();
-
-                    // Try to play the move
-                    if (game.playMove(row, col))
-                    {
-                        cout << "Player '" << currentPlayer << "' plays (" << row << "," << col << ")" << endl;
-
-                        // Check for win
-                        if (game.Win(row, col, currentPlayer))
-                        {
-                            if (game.getDifficulty() > 0 && currentPlayer == 'O')
-                            {
-                                cout << "\nCOMPUTER WINS!" << endl;
-                                lastGameResult = 3;
-                            }
-                            else
-                            {
-                                cout << "\nPLAYER '" << currentPlayer << "' WINS!" << endl;
-                                lastGameResult = 1;
-                            }
-                            gameOver = true;
-                            gamesPlayed++;
-                            return;
-                        }
-
-                        // Check for tie
-                        if (game.Tie())
-                        {
-                            cout << "\nIT'S A TIE!" << endl;
-                            lastGameResult = 2;
-                            gameOver = true;
-                            gamesPlayed++;
-                            return;
-                        }
-
-                        // Change player
-                        game.Switchplayer();
-
-                        // If it is the computer's turn
-                        if (game.getDifficulty() > 0 && game.getCurrentPlayer() == 'O')
-                        {
-                            pair<int, int> computerMove = game.getComputerMove();
-                            int compRow = computerMove.first;
-                            int compCol = computerMove.second;
-
-                            if (game.playMove(compRow, compCol))
-                            {
-                                cout << "Computer plays (" << compRow << "," << compCol << ")" << endl;
-
-                                if (game.Win(compRow, compCol, game.getCurrentPlayer()))
-                                {
-                                    cout << "\nCOMPUTER WINS!" << endl;
-                                    lastGameResult = 3;
-                                    gameOver = true;
-                                    gamesPlayed++;
-                                    return;
-                                }
-
-                                if (game.Tie())
-                                {
-                                    cout << "\nIT'S A TIE!" << endl;
-                                    lastGameResult = 2;
-                                    gameOver = true;
-                                    gamesPlayed++;
-                                    return;
-                                }
-
-                                game.Switchplayer();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        cout << "\nCell already occupied!" << endl;
-                    }
-                }
-            }
+            handleMousePressed(mouseButton);
         }
     }
 }
