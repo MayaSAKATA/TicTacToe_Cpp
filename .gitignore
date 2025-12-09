@@ -51,10 +51,12 @@ build/
 # Local History for Visual Studio Code
 .history/
 
-
 #### Doxygen
 documentation/
 doxygenfile
 
 #### Game exe
 tictactoe_game
+
+
+.DS_Store
