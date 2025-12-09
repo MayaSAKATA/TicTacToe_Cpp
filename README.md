@@ -34,7 +34,7 @@ At the root of the project
 doxygen doxygenfile
 ```
 
-Then
+Then to open the documentation
 
 ```bash
 cd open documentation/html/index.html
@@ -61,6 +61,13 @@ cd build
 cmake ..
 make
 ./PlayTicTacToe
+```
+
+To launch the tests :
+
+```bash
+./test_TicTacToe.cpp
+./test_Graphics.cpp
 ```
 
 ## Useful git commands
