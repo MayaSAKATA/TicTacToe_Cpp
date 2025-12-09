@@ -24,7 +24,7 @@ class TicTacToe
 {
 private:
     /**
-     * @brief Static size of the grid starting at 3x3.
+     * @brief Size of the grid starting at 3x3.
      */
     static int grid_size;
 
@@ -62,6 +62,54 @@ public:
      */
     TicTacToe(int difficulty, int number_of_games);
 
+    // Getters
+    /**
+     * @brief Retrieves the size of the game grid.
+     */
+    int getGridSize() const;
+
+    /**
+     * @brief Retrieves the content of a specific cell on the board.
+     * @param row The row index of the cell.
+     * @param col The column index of the cell.
+     * @return char The character in the specified cell ('X', 'O', or '_').
+     */
+    char getCell(int row, int col) const;
+
+    /**
+     * @brief Retrieves the current player's symbol.
+     * @return char The symbol of the current player ('X' or 'O').
+     */
+    char getCurrentPlayer() const;
+
+    /**
+     * * @brief Retrieves the difficulty level of the game.
+     * @return int The difficulty level (1, 2, or 3).
+     */
+    int getDifficulty();
+
+    /**
+     * * @brief Retrieves the number of games to be played in the session.
+     * @return int The number of games.
+     */
+    int getNumberOfGames() const;
+
+    // Setters
+
+    /**
+     * @brief Sets the size of the game grid.
+     * @param size The new size for the grid (e.g., 3 for 3x3).
+     */
+    void setGridSize(int size);
+
+    /**
+     * @brief Sets the current player's symbol.
+     * @param player The symbol to set as the current player ('X' or 'O').
+     */
+    void setCurrentPlayer(char player);
+
+    // Game management
+
     /**
      * @brief Displays the current game board to the console.
      * * This function formats and prints the 3x3 grid.
@@ -92,6 +140,15 @@ public:
      * @return pair<int, int> The coordinates (row, col) chosen by the player.
      */
     pair<int, int> ChosePosition();
+
+    /**
+     * @brief Plays a move for the current player at the specified position.
+     * @param row The row index where the player wants to place their symbol.
+     * @param col The column index where the player wants to place their symbol.
+     * @return true If the move was successful (cell was empty).
+     * @return false If the move was invalid (cell already occupied).
+     */
+    bool playMove(int row, int col);
 
     /**
      * @brief Switches the current player.

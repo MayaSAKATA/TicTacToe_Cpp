@@ -5,8 +5,15 @@
  */
 
 #include "TicTacToe.hpp"
+#include "Graphics.hpp"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
+#include <thread> // for delay
+#include <chrono>
 
 using namespace std;
+using namespace sf;
 
 int main()
 {
@@ -35,14 +42,23 @@ int main()
     {
         level = 0; // Two players mode
     }
-    cout << "\nHow many games in row? ";
-    cin >> number_of_games;
+    while (number_of_games <= 0)
+    {
+        cout << "\nHow many games in a row? ";
+        cin >> number_of_games;
+    }
 
-    TicTacToe Game = TicTacToe(level, number_of_games);
+    cout << "\nLet's play! Opening game window...\n";
+    this_thread::sleep_for(chrono::seconds(1)); // 2 seconds delay
 
-    cout << "\nLet's play !\n " << endl;
+    TicTacToe game(level, number_of_games);
 
-    Game.Session(number_of_games);
+    // Play in console mode
+    // Game.Session(number_of_games);
+
+    // Play in graphical mode
+    Graphics graphics(game);
+    graphics.run();
 
     return 0;
 }
