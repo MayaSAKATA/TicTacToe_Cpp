@@ -213,6 +213,7 @@ pair<int, int> TicTacToe::getComputerMove()
     if (difficulty == 2)
     {
         // Hard difficulty logic can be implemented here
+        return BestMove(); 
     }
     return {0, 0};
 }
