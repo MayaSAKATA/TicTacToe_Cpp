@@ -57,6 +57,7 @@ private:
      */
     const unsigned int CELL_SIZE = 100; // Hardcoded size of each cell in pixels
 
+public:
     // DRAWING METHODS
 
     /**
@@ -133,7 +134,6 @@ private:
      */
     void processEvents();
 
-public:
     /**
      * @brief Constructor for the Graphics class.
      * @param game Reference to the TicTacToe game logic.
