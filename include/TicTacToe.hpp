@@ -189,6 +189,46 @@ public:
      * and the second element indicates the game status (win/tie/lose).
      */
     pair<bool, int> Play();
+
+        /**
+    * @brief Determines whether the specified player is currently in a winning state.
+    *
+    * This function checks all rows, columns, and both diagonals of the board
+    * to determine if the given player has achieved a complete line.
+    *
+    * @param player The character representing the player ('X' or 'O').
+    * @return true If the player has a winning alignment.
+    * @return false Otherwise.
+    */
+    bool WinState(char player);
+
+
+    /**
+    * @brief Computes the minimax score of the current board state using alpha-beta pruning.
+    *
+    * This recursive function simulates all possible moves for both players and evaluates 
+    * the strength of each game state. The maximizing player corresponds to the AI ('O') 
+    * while the minimizing player corresponds to the human ('X'). Depth is used to limit 
+    * recursion and prioritize faster wins.
+    *
+    * @param maximizingPlayer True if evaluating the AI's turn, false for the human's turn.
+    * @param Depth Remaining search depth allowed for the minimax recursion.
+    * @param alpha Best already explored option along the maximizing branch.
+    * @param beta Best already explored option along the minimizing branch.
+    * @return int The evaluated score of the board state.
+    */
+    int Minimax(bool maximizingPlayer, int Depth, int alpha, int beta);
+
+
+    /**
+    * @brief Computes the best move available for the AI based on the minimax algorithm.
+    *
+    * This function evaluates all possible moves the AI can make and selects the optimal one.
+    * Randomness may be applied depending on internal AI settings to avoid deterministic behavior.
+    *
+    * @return std::pair<int, int> The coordinates {row, column} of the best move.
+    */
+    std::pair<int, int> BestMove();
 };
 
 #endif

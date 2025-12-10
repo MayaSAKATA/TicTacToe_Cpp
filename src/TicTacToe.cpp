@@ -250,7 +250,7 @@ pair<int, int> TicTacToe::getComputerMove()
     }
     if (difficulty == 2) // Hard difficulty: minimax agent
     {
-        // Hard difficulty logic can be implemented here
+        return BestMove();  // Hard difficulty logic can be implemented here
     }
     return {0, 0};
 }
@@ -398,4 +398,227 @@ void TicTacToe::Session(int number_of_games)
             Board_Reset();
         }
     }
+}
+
+// Evaluates whether the given player has achieved a winning state.
+// This is used after simulating a move inside the minimax algorithm.
+bool TicTacToe::WinState(char current_player)
+{
+    // Check all rows
+    for (int i = 0; i < grid_size; ++i) 
+    {
+        bool Check = true;
+        for (int j = 0; j < grid_size; ++j) 
+        {
+            if (Board[i][j] != current_player) 
+            {   
+                Check = false; 
+                break; 
+            }
+        }
+        if (Check) 
+        {
+            return true;
+        }
+    }
+
+    // Check all columns
+    for (int j = 0; j < grid_size; ++j) 
+    {
+        bool Check = true;
+        for (int i = 0; i < grid_size; ++i) 
+        {
+            if (Board[i][j] != current_player) 
+            {   
+                Check = false; 
+                break; 
+            }
+        }
+        if (Check) 
+        {
+            return true;
+        }
+    }
+
+    // Check the main diagonal
+    bool Check = true;
+    for (int i = 0; i < grid_size; ++i) 
+    {
+        if (Board[i][i] != current_player) 
+        {   
+            Check = false; 
+            break; 
+        }
+    }
+    if (Check)
+    {
+        return true;
+    } 
+
+    // Check the anti-diagonal
+    Check = true;
+    for (int i = 0; i < grid_size; ++i) 
+    {
+        if (Board[i][grid_size - 1 - i] != current_player) 
+        { 
+            Check = false;
+            break; 
+        }
+    }
+    if (Check) 
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+// Minimax algorithm with alpha-beta pruning.
+// The AI ('O') tries to maximize the score, while the human ('X') tries to minimize it.
+// Depth is used both to limit recursion and to reward faster wins.
+// Randomness is injected to make the AI less predictable.
+int TicTacToe::Minimax(bool isMaximizing, int Depth, int alpha, int beta)
+{   
+    // Terminal evaluation: AI wins
+    if (WinState('O'))
+    {
+        return 10;
+    }
+
+    // Terminal evaluation: Human wins
+    if (WinState('X'))
+    {
+        return -10; 
+    }
+
+    // Draw or depth limit reached
+    if (Tie() || Depth == 0)
+    {
+        return 0;
+    }
+
+    // Maximizing player (AI)
+    if (isMaximizing)
+    {
+        int val = -10000;
+
+        for (int i = 0; i < grid_size; i++)
+        {
+            for (int j = 0; j < grid_size; j++)
+            {
+                if (Board[i][j] == '_')
+                {
+                    // Simulate move
+                    Board[i][j] = 'O';
+
+                    int score = Minimax(false, Depth - 1, alpha, beta);
+
+
+                    // Undo move
+                    Board[i][j] = '_';
+
+                    val = max(val, score);
+                    alpha = max(alpha, val);
+
+                    // Alpha-beta pruning
+                    if (beta <= alpha)
+                    {
+                        return val;
+                    }
+                }
+            }
+        }
+        return val;
+    }
+
+    // Minimizing player (Human)
+    else
+    {
+        int val = 10000;
+
+        for (int i = 0; i < grid_size; i++)
+        {
+            for (int j = 0; j < grid_size; j++)
+            {
+                if (Board[i][j] == '_')
+                {
+                    // Simulate move
+                    Board[i][j] = 'X';
+
+                    int score = Minimax(true, Depth - 1, alpha, beta);
+
+                    // Undo move
+                    Board[i][j] = '_';
+
+                    val = min(val, score);
+                    beta = min(beta, val);
+
+                    // Alpha-beta pruning
+                    if (beta <= alpha)
+                    {
+                        return val;
+                    }
+                }
+            }
+        }
+        return val;
+    }
+}
+
+
+
+// Computes the best move for the AI using minimax and optional randomness.
+// Returns a pair {row, column}.
+std::pair<int,int> TicTacToe::BestMove()
+{
+    int bestScore = -1000;
+    std::pair<int,int> bestMove = {-1, -1};
+
+    // Set search depth depending on board size
+    int Depth = 0;
+    
+    if (grid_size <= 3)
+    {
+    
+        Depth = 4;
+    } 
+    else
+    {
+        Depth = 4;
+    }
+
+    
+    // Evaluate all possible moves
+    for (int i = 0; i < grid_size; i++)
+    {
+        for (int j = 0; j < grid_size; j++)
+        {
+            if (Board[i][j] == '_')
+            {
+                Board[i][j] = 'O';
+
+                int score = Minimax(false, Depth, -100, 100);
+
+                Board[i][j] = '_';
+
+                // Keep the move with the highest score
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestMove = {i, j};
+                }
+            }
+        }
+    }
+
+    // Failsafe in case no move was selected
+    if (bestMove.first == -1)
+    {
+        auto cells = getEmptyCells();
+        return cells[rand() % cells.size()];
+    }
+
+    return bestMove;
 }
