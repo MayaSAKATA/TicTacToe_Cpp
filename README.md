@@ -7,6 +7,7 @@ This project is an implementation of the classic **Tic-Tac-Toe** (Noughts and Cr
 1. **Phase one (current)** : basic 3x3 game against ourselves [OK]
 2. **Phase two** : Dynamic levels against computer (random and intelligent agents) [IN PROGRESS]
 3. **Phase three** : Graphical implementation [OK]
+4. **Add tests** : Write tests for both TicTacToe and Graphics classes. [OK]
 
 Here is the project structure
 
@@ -23,6 +24,7 @@ TicTacToe
 │  ├─ TicTacToe.cpp
 │  └─ main.cpp
 └─ tests
+   └─ test_Graphics.cpp
    └─ test_TicTacToe.cpp
 ```
 
@@ -66,6 +68,7 @@ make
 To launch the tests :
 
 ```bash
+cd build
 ./test_TicTacToe.cpp
 ./test_Graphics.cpp
 ```
