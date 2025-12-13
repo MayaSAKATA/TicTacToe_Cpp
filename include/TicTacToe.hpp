@@ -48,9 +48,9 @@ private:
     /**
      * @brief The difficulty level of the AI.
      * * Values:
+     * - 0: Human vs human (2 players mode)
      * - 1: Easy (Random moves)
      * - 2: Medium (Defensive/Balanced)
-     * - 3: Hard (Minimax/Optimal)
      */
     int difficulty;
 
@@ -58,7 +58,7 @@ public:
     /**
      * @brief Constructor for the TicTacToe class.
      * * Initializes the game with the selected difficulty.
-     * @param difficulty Integer representing the difficulty level (1, 2, or 3).
+     * @param difficulty Integer representing the difficulty level (0, 1, or 2).
      */
     TicTacToe(int difficulty, int number_of_games);
 
@@ -84,7 +84,7 @@ public:
 
     /**
      * * @brief Retrieves the difficulty level of the game.
-     * @return int The difficulty level (1, 2, or 3).
+     * @return int The difficulty level (0, 1, or 2).
      */
     int getDifficulty();
 
