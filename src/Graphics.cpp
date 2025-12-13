@@ -101,13 +101,13 @@ void Graphics::drawPieces()
         for (int col = 0; col < gridSize; col++)
         {
             char cell = game.getCell(row, col);
-            if (cell == 'O')
-            {
-                drawCircle(col, row);
-            }
-            else if (cell == 'X')
+            if (cell == 'X')
             {
                 drawCross(col, row);
+            }
+            else if (cell == 'O')
+            {
+                drawCircle(col, row);
             }
         }
     }
@@ -214,7 +214,7 @@ void Graphics::handleMousePressed(const Event::MouseButtonPressed *mouseButton)
     int col = mouseButton->position.x / CELL_SIZE;
     int row = mouseButton->position.y / CELL_SIZE;
 
-    // Vérifier que le clic est dans la grille
+    // Check if click is within grid bounds
     if (row < 0 || row >= gridSize || col < 0 || col >= gridSize)
         return;
 
@@ -233,21 +233,20 @@ void Graphics::handlePlayerMove(int row, int col)
 
     cout << "Player '" << currentPlayer << "' plays (" << row << "," << col << ")" << endl;
 
-    // Vérifier victoire
+    // Check win
     if (game.Win(row, col, currentPlayer))
     {
         handlePlayerWin(currentPlayer);
         return;
     }
 
-    // Vérifier égalité
+    // Check tie
     if (game.Tie())
     {
         handleTie();
         return;
     }
-
-    // Changer de joueur et gérer le tour de l'ordinateur si nécessaire
+    // Change player and handle computer's turn if necessary
     game.Switchplayer();
 
     if (game.getDifficulty() > 0 && game.getCurrentPlayer() == 'O')
@@ -296,7 +295,7 @@ void Graphics::handleComputerMove()
 
     cout << "Computer plays (" << compRow << "," << compCol << ")" << endl;
 
-    // Vérifier victoire de l'ordinateur
+    // Check computer win
     if (game.Win(compRow, compCol, game.getCurrentPlayer()))
     {
         cout << "\nCOMPUTER WINS!" << endl;
@@ -308,7 +307,7 @@ void Graphics::handleComputerMove()
         return;
     }
 
-    // Vérifier égalité
+    // Check tie
     if (game.Tie())
     {
         cout << "\nIT'S A TIE!" << endl;

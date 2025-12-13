@@ -39,7 +39,7 @@ int main()
     }
     if (players == 2)
     {
-        cout << "\nSelect difficulty level:\n1. Easy\n2. Hard (not implemented)\n\nEnter your choice (1-2): ";
+        cout << "\nSelect difficulty level:\n1. Easy\n2. Hard\n\nEnter your choice (1-2): ";
         while (true)
         {
             cin >> input;
