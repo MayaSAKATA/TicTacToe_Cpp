@@ -31,3 +31,6 @@ target_link_libraries(PlayTicTacToe PRIVATE
 
 add_executable(test_TicTacToe tests/test_TicTacToe.cpp)
 target_link_libraries(test_TicTacToe TicTacToe Catch2::Catch2WithMain)
+
+add_executable(test_Graphics tests/test_Graphics.cpp)
+target_link_libraries(test_Graphics Graphics Catch2::Catch2WithMain)

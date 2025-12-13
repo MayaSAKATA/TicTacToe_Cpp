@@ -18,34 +18,63 @@ using namespace sf;
 int main()
 {
     int players, level, number_of_games;
+    string input;
+
     cout << "\nWelcome to Tic Tac Toe!\n";
     cout << "\n======================\n";
-
     cout << "How many players?\n1. Two Players (Human vs Human)\n2. One Player (vs Computer)\n\nEnter your choice (1-2): ";
-    cin >> players;
-    while (players < 1 || players > 2)
+
+    while (true)
     {
-        cout << "Only two options available 1 or 2" << endl;
-        cin >> players;
+        cin >> input;
+        if (input == "1" || input == "2")
+        {
+            players = stoi(input);
+            break;
+        }
+        else
+        {
+            cout << "Only two options available 1 or 2\nPlease retry:" << endl;
+        }
     }
     if (players == 2)
     {
         cout << "\nSelect difficulty level:\n1. Easy\n2. Hard (not implemented)\n\nEnter your choice (1-2): ";
-        cin >> level;
-        while (level < 1 || level > 2)
+        while (true)
         {
-            cout << "Only two levels available 1 or 2" << endl;
-            cin >> level;
+            cin >> input;
+            if (input == "1" || input == "2")
+            {
+                level = stoi(input);
+                break;
+            }
+            else
+            {
+                cout << "Only two levels available 1 or 2\nPlease retry:" << endl;
+            }
         }
     }
     else
     {
-        level = 0; // Two players mode
+        level = 0; // 2 players mode (human vs human), no difficulty
     }
-    while (number_of_games <= 0)
+    cout << "\nHow many games in a row? ";
+    while (true)
     {
-        cout << "\nHow many games in a row? ";
-        cin >> number_of_games;
+        cin >> input;
+        try
+        {
+            number_of_games = stoi(input);
+            if (number_of_games > 0)
+            {
+                break;
+            }
+            cout << "Please enter a number greater than 0\nPlease retry: ";
+        }
+        catch (...) // catch all expections
+        {
+            cout << "\nPlease retry: ";
+        }
     }
 
     cout << "\nLet's play! Opening game window...\n";

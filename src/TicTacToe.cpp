@@ -14,7 +14,7 @@ using namespace std;
 TicTacToe::TicTacToe(int level, int games)
 {
     current_player = 'X';
-    difficulty = level; // Computer move difficulty : 1. easy, 2. hard
+    difficulty = level; // 0. Human vs human, 1. easy, 2. hard
     number_of_games = games;
     srand(time(0));
 

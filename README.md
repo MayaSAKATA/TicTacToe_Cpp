@@ -7,6 +7,7 @@ This project is an implementation of the classic **Tic-Tac-Toe** (Noughts and Cr
 1. **Phase one (current)** : basic 3x3 game against ourselves [OK]
 2. **Phase two** : Dynamic levels against computer (random and intelligent agents) [IN PROGRESS]
 3. **Phase three** : Graphical implementation [OK]
+4. **Add tests** : Write tests for both TicTacToe and Graphics classes. [OK]
 
 Here is the project structure
 
@@ -23,6 +24,7 @@ TicTacToe
 │  ├─ TicTacToe.cpp
 │  └─ main.cpp
 └─ tests
+   └─ test_Graphics.cpp
    └─ test_TicTacToe.cpp
 ```
 
@@ -34,7 +36,7 @@ At the root of the project
 doxygen doxygenfile
 ```
 
-Then
+Then to open the documentation
 
 ```bash
 cd open documentation/html/index.html
@@ -42,7 +44,34 @@ cd open documentation/html/index.html
 
 ## Compilation and Execution
 
-This project uses a **Makefile** to automate the compilation process with 'g++'.
+This project uses a **Makefile** to automate the compilation process with `g++`.
+
+Install [CMake](https://cmake.org/download/).
+
+You will also need to install the **latest version** (v3) of [Catch2](https://catch2.org/#Installation) and the [SFML](https://www.sfml-dev.org/download/sfml/3.0.2/) library :
+
+```bash
+brew install sfml catch2 # MacOS
+sudo apt install libsfml-dev catch2 # Ubuntu/Debian
+```
+
+To launch the game :
+
+```bash
+mkdir build
+cd build
+cmake ..
+make
+./PlayTicTacToe
+```
+
+To launch the tests :
+
+```bash
+cd build
+./test_TicTacToe.cpp
+./test_Graphics.cpp
+```
 
 ## Useful git commands
 
