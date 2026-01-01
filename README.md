@@ -38,7 +38,7 @@ Enter your choice (1-2): 2
 How many games in a row? 1
 
 Let's play! Opening game window...
-````
+```
 
 ![TicTacToe_example](TicTacToe_example2.png)
 

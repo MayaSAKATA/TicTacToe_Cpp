@@ -31,6 +31,10 @@ private:
      */
     RenderWindow window;
     /**
+     * @brief Update the window size based on the current grid size.
+     */
+    void updateWindowSize();
+    /**
      * @brief Reference to the TicTacToe game logic.
      */
     TicTacToe &game;
@@ -80,11 +84,6 @@ public:
      * @param row Row index
      */
     void drawCross(int col, int row);
-
-    /**
-     * @brief Update the window size based on the current grid size.
-     */
-    void updateWindowSize();
 
     // HANDLERS
 

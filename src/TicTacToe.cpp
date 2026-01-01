@@ -69,7 +69,7 @@ void TicTacToe::setCurrentPlayer(char player)
 
 void TicTacToe::displayBoard()
 {
-    int num = 1; // empty cell numbering starts from 1
+    int num = 1; // Empty cell numbering starts from 1
     for (int i = 0; i < grid_size; i++)
     {
         for (int j = 0; j < grid_size; j++)
@@ -242,10 +242,10 @@ pair<int, int> TicTacToe::getComputerMove()
     if (difficulty == 1) // Easy difficulty: random move
     {
         vector<pair<int, int>> empty_cells = getEmptyCells();
-        if (!empty_cells.empty()) // check if there are empty cells
+        if (!empty_cells.empty()) // Check if there are empty cells
         {
-            int randomIndex = rand() % empty_cells.size(); // chose a random index to select an empty cell
-            return empty_cells[randomIndex];               // returns (row, col) of the selected cell
+            int randomIndex = rand() % empty_cells.size(); // Chose a random index to select an empty cell
+            return empty_cells[randomIndex];               // Returns (row, col) of the selected cell
         }
     }
     if (difficulty == 2) // Hard difficulty: minimax agent
@@ -289,7 +289,7 @@ bool TicTacToe::playMove(int row, int col)
 
 pair<bool, int> TicTacToe::Play()
 {
-    pair<bool, int> result = {true, 0}; // first: continue game, second: continue/win/tie/lose status
+    pair<bool, int> result = {true, 0}; // First: continue game, second: continue/win/tie/lose status
     int row, col;
     displayBoard();
 
@@ -375,22 +375,22 @@ void TicTacToe::Session(int number_of_games)
             cout << "Thanks for playing!" << endl;
             break;
         }
-        else if (response == 'y' || response == 'Y') // play next game
+        else if (response == 'y' || response == 'Y') // Play next game
         {
             cout << "\nStarting next game...\n"
                  << endl;
-            switch (continue_game.second) // adjust grid size based on last game result
+            switch (continue_game.second) // Adjust grid size based on last game result
             {
-            case 1: // win, increase grid size
+            case 1: // Win, increase grid size
                 if (grid_size < 6)
                 {
                     grid_size++;
                 }
                 break;
-            case 3: // lose, decrease grid size
+            case 3: // Lose, decrease grid size
                 grid_size = 3;
                 break;
-            case 2: // tie, replay with same grid size
+            case 2: // Tie, replay with same grid size
                 break;
             default:
                 break;

@@ -22,7 +22,7 @@ int main()
 
     cout << "\nWelcome to Tic Tac Toe!\n";
     cout << "\n======================\n";
-    cout << "How many players?\n1. Two Players (Human vs Human)\n2. One Player (vs Computer)\n\nEnter your choice (1-2): ";
+    cout << "\nHow many players?\n1. Two Players (Human vs Human)\n2. One Player (vs Computer)\n\nEnter your choice (1-2): ";
 
     while (true)
     {
