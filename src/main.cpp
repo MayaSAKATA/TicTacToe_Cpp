@@ -77,17 +77,17 @@ int main()
         }
     }
 
-    cout << "\nLet's play! Opening game window...\n";
+    cout << "\nLet's play! Opening game window...\n\n";
     this_thread::sleep_for(chrono::seconds(1)); // 2 seconds delay
 
     TicTacToe game(level, number_of_games);
 
     // Play in console mode
-    // Game.Session(number_of_games);
+    game.Session(number_of_games);
 
     // Play in graphical mode
-    Graphics graphics(game);
-    graphics.run();
+    // Graphics graphics(game);
+    // graphics.run();
 
     return 0;
 }
